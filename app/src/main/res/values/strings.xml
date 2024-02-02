@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">BISU_InventoryQRcode</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="status_options">
+        <item>Usable</item>
+        <item>Not Usable</item>
+    </string-array>
+
+    <string-array name="category_options">
+        <item>Land</item>
+        <item>Land Improvement</item>
+        <item>Office Building</item>
+        <item>School Building</item>
+        <item>Other Structure</item>
+        <item>Office Equipment</item>
+        <item>Furniture and Fixtures</item>
+        <item>IT Equipment</item>
+        <item>Library and Other Books</item>
+        <item>Other Machineries and Equipment</item>
+        <item>Disaster Response and Rescue Equipment</item>
+        <item>Technical and Scientific Equipment</item>
+        <item>Motor Vehicle</item>
+        <item>Other Property, Plant and Equipment</item>
+        <item>Textbooks and Instructional Materials Inventory</item>
+        <item>Other</item>
+    </string-array>
+</resources>
