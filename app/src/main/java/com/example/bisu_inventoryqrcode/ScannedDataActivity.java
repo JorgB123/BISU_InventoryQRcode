@@ -1,10 +1,14 @@
 package com.example.bisu_inventoryqrcode;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -15,8 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -25,6 +33,7 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -37,11 +46,13 @@ import java.util.Locale;
 public class ScannedDataActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int YOUR_CAMERA_PERMISSION_REQUEST_CODE = 100;
 
     private TextView scannedDataTextView;
     private EditText descriptionEditText;
     private EditText dateAcquiredEditText;
     private EditText itemCostEditText;
+    private EditText itemQuantityEditText;
     private Spinner categorySpinner;
     private Spinner statusSpinner;
     private EditText whereaboutEditText;
@@ -50,8 +61,9 @@ public class ScannedDataActivity extends AppCompatActivity {
     private Bitmap selectedBitmap;
     private Bitmap bitmap;
     private byte[] byteArray;
-    Settings settings;
-    String ipAddress="";
+    private Settings settings;
+    private String ipAddress = "";
+    private String currentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,30 +71,29 @@ public class ScannedDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scanned_data);
 
         // Initialize the UI elements
+        IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
         scannedDataTextView = findViewById(R.id.scannedDataTextView);
         descriptionEditText = findViewById(R.id.descriptionEditText);
         dateAcquiredEditText = findViewById(R.id.dateAcquiredEditText);
         itemCostEditText = findViewById(R.id.itemCostEditText);
+        itemQuantityEditText = findViewById(R.id.itemQuantityEditText);
         categorySpinner = findViewById(R.id.categorySpinner);
         statusSpinner = findViewById(R.id.statusSpinner);
         whereaboutEditText = findViewById(R.id.whereabout);
         insertItemButton = findViewById(R.id.insertItemButton);
         imageView = findViewById(R.id.imageView);
         settings = new Settings();
-        ipAddress= settings.ipAddress;
+        ipAddress = ipAddressManager.getIPAddress();
 
         String qr_id = getIntent().getStringExtra("scannedData");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
-        // Retrieve the scanned data from the Intent
         scannedDataTextView.setText("QR Number: " + currentDateandTime);
 
-        // Set an OnClickListener for the "Insert Item" button
         insertItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
                 try {
@@ -99,57 +110,119 @@ public class ScannedDataActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                // Retrieve the item details
                 String itemDescription = descriptionEditText.getText().toString();
                 String dateAcquired = dateAcquiredEditText.getText().toString();
                 String itemCost = itemCostEditText.getText().toString();
+                String itemQuantity = itemQuantityEditText.getText().toString();
                 String category = categorySpinner.getSelectedItem().toString();
                 String status = statusSpinner.getSelectedItem().toString();
                 String whereabout = whereaboutEditText.getText().toString();
 
-                // Convert the selected bitmap to base64
                 String imageData = bitmapToBase64(selectedBitmap);
 
-                // Reset the ImageView
                 imageView.setImageResource(R.drawable.placeholder);
 
-                // Execute AsyncTask to insert data into MySQL along with the image
-                new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, category, status, whereabout, imageData);
+                new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, category, status, whereabout, imageData);
                 descriptionEditText.getText().clear();
                 dateAcquiredEditText.getText().clear();
                 itemCostEditText.getText().clear();
+                itemQuantityEditText.getText().clear();
                 whereaboutEditText.getText().clear();
             }
         });
 
-        // Set an OnClickListener for the "Upload Image" button
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openImageChooser();
+                // Check for camera permission
+                if (ContextCompat.checkSelfPermission(ScannedDataActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    // Request camera permission
+                    ActivityCompat.requestPermissions(ScannedDataActivity.this, new String[]{Manifest.permission.CAMERA}, YOUR_CAMERA_PERMISSION_REQUEST_CODE);
+                } else {
+                    // Camera permission already granted, proceed with opening the image chooser
+                    openImageChooser();
+                }
             }
         });
     }
 
     private void openImageChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Check if there is a camera app available
+        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+            // Create a File to save the image
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            if (photoFile != null) {
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(
+                        this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        photoFile));
+            }
+        }
+
+        // Create a chooser for the user to select camera or gallery
+        Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Picture");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
+
+        startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            try {
-                selectedBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()));
-                imageView.setImageBitmap(selectedBitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            if (data != null && data.getData() != null) {
+                try {
+                    selectedBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()));
+                    imageView.setImageBitmap(selectedBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (currentPhotoPath != null) {
+                setPic();
             }
         }
+    }
+
+    private void setPic() {
+        int targetW = imageView.getWidth();
+        int targetH = imageView.getHeight();
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        selectedBitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        imageView.setImageBitmap(selectedBitmap);
     }
 
     private String bitmapToBase64(Bitmap bitmap) {
@@ -159,7 +232,6 @@ public class ScannedDataActivity extends AppCompatActivity {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-    // AsyncTask class for inserting data into MySQL
     private class InsertDataTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -168,25 +240,25 @@ public class ScannedDataActivity extends AppCompatActivity {
                 String itemDescription = params[1];
                 String dateAcquired = params[2];
                 String itemCost = params[3];
-                String category = params[4];
-                String status = params[5];
-                String whereabout = params[6];
-                String imageData = params[7];
+                String itemQuantity = params[4];
+                String category = params[5];
+                String status = params[6];
+                String whereabout = params[7];
+                String imageData = params[8];
 
-                String serverUrl = ipAddress +"/LoginRegister/insert_data.php"; // Replace with your server URL
+                String serverUrl = ipAddress + "/LoginRegister/insert_data.php";
 
-                // Open a connection to the server
                 HttpURLConnection connection = (HttpURLConnection) new URL(serverUrl).openConnection();
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
 
-                // Send the data to the server
                 OutputStream os = connection.getOutputStream();
                 OutputStreamWriter writer = new OutputStreamWriter(os);
                 writer.write("scanned_code=" + scannedCode +
                         "&item_description=" + itemDescription +
                         "&date_acquired=" + dateAcquired +
                         "&item_cost=" + itemCost +
+                        "&item_quantity=" + itemQuantity +
                         "&category=" + category +
                         "&status=" + status +
                         "&whereabout=" + whereabout +
@@ -194,13 +266,10 @@ public class ScannedDataActivity extends AppCompatActivity {
                 writer.close();
                 os.close();
 
-                // Get the response from the server
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Insertion successful
                     return "Data inserted successfully";
                 } else {
-                    // Insertion failed
                     return "Error: " + responseCode;
                 }
             } catch (IOException e) {
@@ -211,13 +280,10 @@ public class ScannedDataActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("InsertDataResponse", result); // Log the response
-
-            // Access UI elements on the UI thread
+            Log.d("InsertDataResponse", result);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    // Display a message on the screen
                     Toast.makeText(ScannedDataActivity.this, result, Toast.LENGTH_SHORT).show();
 
                     if (result.equals("Data inserted successfully")) {
@@ -225,8 +291,6 @@ public class ScannedDataActivity extends AppCompatActivity {
                         showQRIntent.putExtra("qr_code", byteArray);
                         startActivity(showQRIntent);
                     }
-                    // Handle the result as needed
-                    // For example, you can finish the activity or navigate to another screen
                 }
             });
         }
