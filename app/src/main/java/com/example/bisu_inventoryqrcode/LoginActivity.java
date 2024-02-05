@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     TextView click;
     Settings settings;
-    String ipAddress="";
+    String ipAddress="";//hjhj
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
