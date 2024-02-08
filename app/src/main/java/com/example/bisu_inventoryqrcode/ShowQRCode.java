@@ -1,6 +1,8 @@
 package com.example.bisu_inventoryqrcode;
 
+import android.Manifest;
 import android.content.ContentValues;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,41 +14,55 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class ShowQRCode extends AppCompatActivity {
-    Button save, add;
-    ImageView qrCode;
+    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    private Bitmap bmp;
+    private Button saveButton;
+    private ImageView qrCodeImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_qrcode);
 
-        save = findViewById(R.id.save_qr);
-        add = findViewById(R.id.add_again);
-        qrCode = findViewById(R.id.qr_code_img);
+        saveButton = findViewById(R.id.save_qr);
+        qrCodeImageView = findViewById(R.id.qr_code_img);
 
         byte[] byteArray = getIntent().getByteArrayExtra("qr_code");
-        final Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
-        qrCode.setImageBitmap(bmp);
+        qrCodeImageView.setImageBitmap(bmp);
 
-        save.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveImageToGallery(bmp);
+                if (checkPermission()) {
+                    saveImageToGallery();
+                } else {
+                    requestPermission();
+                }
             }
         });
     }
 
-    private void saveImageToGallery(Bitmap bitmap) {
+    private boolean checkPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+    }
+
+    private void saveImageToGallery() {
         String fileName = "QRCodeImage";
-        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        File myDir = new File(root + "/BISU_Inventory_QRCode");
+        File myDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "BISU_Inventory_QRCode");
 
         if (!myDir.exists()) {
             myDir.mkdirs();
@@ -54,11 +70,13 @@ public class ShowQRCode extends AppCompatActivity {
 
         String fname = fileName + System.currentTimeMillis() + ".jpg";
         File file = new File(myDir, fname);
-        if (file.exists()) file.delete();
+        if (file.exists()) {
+            file.delete();
+        }
 
         try {
             OutputStream out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();
             out.close();
 
@@ -72,6 +90,19 @@ public class ShowQRCode extends AppCompatActivity {
             Toast.makeText(this, "Image saved to gallery", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_WRITE_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                saveImageToGallery();
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
