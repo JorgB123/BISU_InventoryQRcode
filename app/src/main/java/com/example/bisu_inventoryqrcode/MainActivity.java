@@ -1,6 +1,7 @@
 package com.example.bisu_inventoryqrcode;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,9 +25,16 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigationView.setBackground(null);
 
+        // Set up onClickListener for the FloatingActionButton
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new ScanFragment());
+            }
+        });
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
-
                 case R.id.Home:
                     replaceFragment(new HomeFragment());
                     break;
@@ -46,22 +54,17 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.Profile:
                     replaceFragment(new ProfileFragment());
                     break;
-
             }
-
-
             return true;
         });
-
     }
 
-            private void replaceFragment(Fragment fragment) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.navHostFragment,fragment);
-                fragmentTransaction.commit();
-            }
-
-        }
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.navHostFragment, fragment);
+        fragmentTransaction.commit();
+    }
+}
 
 
