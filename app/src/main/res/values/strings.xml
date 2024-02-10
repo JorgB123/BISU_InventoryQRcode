@@ -26,4 +26,5 @@
         <item>Textbooks and Instructional Materials Inventory</item>
         <item>Other</item>
     </string-array>
+    <string name="title_activity_user_dash_board">UserDashBoard</string>
 </resources>
