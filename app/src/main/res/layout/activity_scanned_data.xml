@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@drawable/bgj"
     tools:context=".ScannedDataActivity">
 
     <RelativeLayout
@@ -28,6 +29,7 @@
             android:layout_marginTop="26dp"
             android:text=""
             android:textColor="#000000"
+            android:background="@drawable/stroke"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -38,13 +40,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/scannedDataTextView"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             android:hint="Item Name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/descriptionEditText"
+                android:background="@drawable/stroke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -56,14 +59,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/itemNameInputLayout"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             android:hint="Date Acquired">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dateAcquiredEditText"
                 android:layout_width="match_parent"
+                android:background="@drawable/stroke"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,13 +78,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dateAcquiredInputLayout"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             android:hint="Item Cost">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/itemCostEditText"
+                android:background="@drawable/stroke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,14 +97,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/itemCostInputLayout"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             android:hint="Item Quantity">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/itemQuantityEditText"
                 android:layout_width="match_parent"
+                android:background="@drawable/stroke"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,22 +113,24 @@
         <TextView
             android:id="@+id/categoryLabel"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_below="@+id/itemQuantityInputLayout"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:text="Category"
             android:textColor="#000000" />
 
         <!-- Category Spinner -->
         <Spinner
+
             android:id="@+id/categorySpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/categoryLabel"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             android:entries="@array/category_options"
             android:hint="Select Category" />
 
@@ -133,36 +141,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/categorySpinner"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:text="Status"/>
 
         <!-- Status Spinner -->
+
+        <!-- Whereabout -->
         <Spinner
             android:id="@+id/statusSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/statusLabel"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="30dp"
             android:entries="@array/status_options"
             android:hint="Select Status" />
 
-        <!-- Whereabout -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/whereaboutInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/statusSpinner"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="30dp"
             android:hint="Whereabout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/whereabout"
+                android:background="@drawable/stroke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
