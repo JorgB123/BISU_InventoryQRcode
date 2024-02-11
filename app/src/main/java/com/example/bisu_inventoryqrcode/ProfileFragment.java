@@ -24,7 +24,7 @@ public class ProfileFragment extends Fragment {
         changeIP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),Settings.class);
+                Intent intent = new Intent(getActivity(),UserDashBoard.class);
                 startActivity(intent);
             }
         });

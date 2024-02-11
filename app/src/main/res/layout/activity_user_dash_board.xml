@@ -33,8 +33,8 @@
 
                 <ImageView
                     android:id="@+id/imageView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="445dp"
+                    android:layout_height="263dp"
                     android:src="@drawable/top_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -169,7 +169,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
-                android:id="@+id/editTextText7"
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
@@ -259,7 +259,7 @@
                             android:background="@drawable/white_top_button">
 
                             <ImageView
-                                android:id="@+id/inbox"
+                                android:id="@+id/inventory_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
@@ -278,7 +278,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Inbox"
+                            android:text="View Inventory"
                             android:textAlignment="center"
                             android:textColor="#000000"
                             android:textSize="14sp"
@@ -298,7 +298,7 @@
                             android:background="@drawable/white_top_button">
 
                             <ImageView
-                                android:id="@+id/maps"
+                                android:id="@+id/request_item"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
@@ -313,11 +313,11 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/mapslabel"
+                            android:id="@+id/report"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Maps"
+                            android:text="Request Item"
                             android:textAlignment="center"
                             android:textColor="#000000"
                             android:textSize="14sp"
@@ -337,7 +337,7 @@
                             android:background="@drawable/white_top_button">
 
                             <ImageView
-                                android:id="@+id/chats"
+                                android:id="@+id/report_damage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
@@ -348,7 +348,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_3" />
+                                app:srcCompat="@drawable/ic_4" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -356,7 +356,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Chats"
+                            android:text="Report Damages"
                             android:textAlignment="center"
                             android:textColor="#000000"
                             android:textSize="14sp"
@@ -375,7 +375,7 @@
                             android:background="@drawable/white_top_button">
 
                             <ImageView
-                                android:id="@+id/reports"
+                                android:id="@+id/scanner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
@@ -386,7 +386,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_4" />
+                                app:srcCompat="@drawable/ic_3" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -394,7 +394,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Reports"
+                            android:text="Scan"
                             android:textAlignment="center"
                             android:textColor="#000000"
                             android:textSize="14sp"
