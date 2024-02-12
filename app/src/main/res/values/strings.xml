@@ -26,5 +26,21 @@
         <item>Textbooks and Instructional Materials Inventory</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="unit_options">
+        <item>Piece</item>
+        <item>Pax</item>
+        <item>Unit</item>
+        <item>PC</item>
+        <!-- Add more unit options as needed -->
+    </string-array>
+
+    <string-array name="source_fund_options">
+        <item>STF</item>
+        <item>GAA</item>
+        <!-- Add more source fund options as needed -->
+    </string-array>
+
+
     <string name="title_activity_user_dash_board">UserDashBoard</string>
 </resources>

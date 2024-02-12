@@ -90,7 +90,7 @@ public class ScannedDataActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
-        scannedDataTextView.setText("QR Number: " + currentDateandTime);
+        scannedDataTextView.setText("Property Number: " + currentDateandTime);
 
         insertItemButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -43,7 +43,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="30dp"
-            android:hint="Item Name">
+            android:hint="Description">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/descriptionEditText"
@@ -81,7 +81,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="30dp"
-            android:hint="Item Cost">
+            android:hint="Unit Cost">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/itemCostEditText"
@@ -100,7 +100,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="30dp"
-            android:hint="Item Quantity">
+            android:hint="Stock Available">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/itemQuantityEditText"
@@ -109,16 +109,34 @@
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Category Label -->
-        <TextView
-            android:id="@+id/categoryLabel"
-            android:layout_width="wrap_content"
-
+        <!-- Supplier Name -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/supplierNameInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/itemQuantityInputLayout"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:text="Category"
+            android:layout_marginRight="30dp"
+            android:hint="Supplier Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/supplierNameEditText"
+                android:background="@drawable/stroke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Category Label -->
+        <TextView
+            android:id="@+id/categoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/supplierNameInputLayout"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="16dp"
+            android:text="Particular"
             android:textColor="#000000" />
 
         <!-- Category Spinner -->
@@ -143,7 +161,7 @@
             android:layout_below="@+id/categorySpinner"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
-            android:text="Status"/>
+            android:text="Property Status"/>
 
         <!-- Status Spinner -->
 
@@ -177,13 +195,54 @@
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Rest of your layout -->
+        <TextView
+            android:id="@+id/unitLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/whereaboutInputLayout"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="16dp"
+            android:text="Unit"
+            android:textColor="#000000" />
+
+        <Spinner
+            android:id="@+id/unitSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/unitLabel"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="30dp"
+            android:entries="@array/unit_options"
+            android:hint="Select Unit" />
+
+        <!-- Source Fund Label -->
+        <TextView
+            android:id="@+id/sourceFundLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/unitSpinner"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="16dp"
+            android:text="Source Fund"
+            android:textColor="#000000" />
+
+        <Spinner
+            android:id="@+id/sourceFundSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sourceFundLabel"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="30dp"
+            android:entries="@array/source_fund_options"
+            android:hint="Select Source Fund" />
 
         <Button
             android:id="@+id/insertItemButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/whereaboutInputLayout"
+            android:layout_below="@+id/sourceFundSpinner"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="Insert Item" />
