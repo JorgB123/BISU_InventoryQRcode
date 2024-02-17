@@ -25,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.multidex.BuildConfig;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -50,12 +49,12 @@ public class ScannedDataActivity extends AppCompatActivity {
     private static final int YOUR_CAMERA_PERMISSION_REQUEST_CODE = 100;
 
     private TextView scannedDataTextView;
-    private EditText descriptionEditText;
+    private EditText descriptionEditText, supplierNameEditText;
     private EditText dateAcquiredEditText;
     private EditText itemCostEditText;
     private EditText itemQuantityEditText;
     private Spinner categorySpinner;
-    private Spinner statusSpinner;
+    private Spinner statusSpinner, unitSpinner, sourceFundSpinner;
     private EditText whereaboutEditText;
     private Button insertItemButton;
     private ImageView imageView;
@@ -77,9 +76,12 @@ public class ScannedDataActivity extends AppCompatActivity {
         descriptionEditText = findViewById(R.id.descriptionEditText);
         dateAcquiredEditText = findViewById(R.id.dateAcquiredEditText);
         itemCostEditText = findViewById(R.id.itemCostEditText);
+        supplierNameEditText= findViewById(R.id.supplierNameEditText);
         itemQuantityEditText = findViewById(R.id.itemQuantityEditText);
         categorySpinner = findViewById(R.id.categorySpinner);
         statusSpinner = findViewById(R.id.statusSpinner);
+        unitSpinner = findViewById(R.id.unitSpinner);
+        sourceFundSpinner=findViewById(R.id.sourceFundSpinner);
         whereaboutEditText = findViewById(R.id.whereabout);
         insertItemButton = findViewById(R.id.insertItemButton);
         imageView = findViewById(R.id.imageView);
@@ -115,20 +117,24 @@ public class ScannedDataActivity extends AppCompatActivity {
                 String dateAcquired = dateAcquiredEditText.getText().toString();
                 String itemCost = itemCostEditText.getText().toString();
                 String itemQuantity = itemQuantityEditText.getText().toString();
+                String supplier = supplierNameEditText.getText().toString();
                 String category = categorySpinner.getSelectedItem().toString();
                 String status = statusSpinner.getSelectedItem().toString();
                 String whereabout = whereaboutEditText.getText().toString();
+                String unit = unitSpinner.getSelectedItem().toString();
+                String sourceFund = sourceFundSpinner.getSelectedItem().toString();
 
                 String imageData = bitmapToBase64(selectedBitmap);
 
                 imageView.setImageResource(R.drawable.placeholder);
 
-                new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, category, status, whereabout, imageData);
+                new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, supplier, category, status, whereabout, imageData, unit, sourceFund);
                 descriptionEditText.getText().clear();
                 dateAcquiredEditText.getText().clear();
                 itemCostEditText.getText().clear();
                 itemQuantityEditText.getText().clear();
                 whereaboutEditText.getText().clear();
+                supplierNameEditText.getText().clear();
             }
         });
 
@@ -242,10 +248,13 @@ public class ScannedDataActivity extends AppCompatActivity {
                 String dateAcquired = params[2];
                 String itemCost = params[3];
                 String itemQuantity = params[4];
-                String category = params[5];
-                String status = params[6];
-                String whereabout = params[7];
-                String imageData = params[8];
+                String supplier = params[5];
+                String category = params[6];
+                String status = params[7];
+                String whereabout = params[8];
+                String imageData = params[9];
+                String unit = params[10];
+                String sourceFund = params[11];
 
                 String serverUrl = ipAddress + "/LoginRegister/insert_data.php";
 
@@ -260,10 +269,13 @@ public class ScannedDataActivity extends AppCompatActivity {
                         "&date_acquired=" + dateAcquired +
                         "&item_cost=" + itemCost +
                         "&item_quantity=" + itemQuantity +
+                        "&supplier=" + supplier +
                         "&category=" + category +
                         "&status=" + status +
                         "&whereabout=" + whereabout +
-                        "&image=" + imageData);
+                        "&image=" + imageData +
+                        "&unit=" + unit +
+                        "&sourceFund=" + sourceFund);
                 writer.close();
                 os.close();
 
@@ -296,4 +308,7 @@ public class ScannedDataActivity extends AppCompatActivity {
             });
         }
     }
+
+    // Other helper methods...
+
 }
