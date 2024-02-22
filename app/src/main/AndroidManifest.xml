@@ -61,13 +61,13 @@
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".SignUp"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ScannedDataActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".SignUp"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

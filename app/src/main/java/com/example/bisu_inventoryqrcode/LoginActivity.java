@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             String result = putData.getResult();
-                            System.out.println("ip "+ipAddress);
                             if (result.equals("Login Successfully")) {
                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
