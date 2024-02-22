@@ -48,20 +48,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(view -> {
-          String username = String.valueOf(usernameEditText.getText());
-          String password = String.valueOf(passwordEditText.getText());
+          String Email = String.valueOf(usernameEditText.getText());
+          String Password = String.valueOf(passwordEditText.getText());
 
 
 
-            if (!username.equals("") && !password.equals("")) {
+            if (!Email.equals("") && !Password.equals("")) {
                 Handler handler = new Handler();
                 handler.post(() -> {
                     String[] field = new String[2];
-                    field[0] = "username";
-                    field[1] = "password";
+                    field[0] = "Email";
+                    field[1] = "Password";
                     String[] data = new String[2];
-                    data[0] = username;
-                    data[1] = password;
+                    data[0] = Email;
+                    data[1] = Password;
                     PutData putData = new PutData(ipAddress+ "/LoginRegister/login.php","POST", field, data);
                     if (putData.startPut()) {
                         if (putData.onComplete()) {

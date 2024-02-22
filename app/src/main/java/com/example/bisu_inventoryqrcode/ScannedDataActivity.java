@@ -264,18 +264,18 @@ public class ScannedDataActivity extends AppCompatActivity {
 
                 OutputStream os = connection.getOutputStream();
                 OutputStreamWriter writer = new OutputStreamWriter(os);
-                writer.write("scanned_code=" + scannedCode +
-                        "&item_description=" + itemDescription +
-                        "&date_acquired=" + dateAcquired +
-                        "&item_cost=" + itemCost +
-                        "&item_quantity=" + itemQuantity +
-                        "&supplier=" + supplier +
-                        "&category=" + category +
-                        "&status=" + status +
-                        "&whereabout=" + whereabout +
-                        "&image=" + imageData +
-                        "&unit=" + unit +
-                        "&sourceFund=" + sourceFund);
+                writer.write("PropertyNumber=" + scannedCode +
+                        "&Description=" + itemDescription +
+                        "&DateAcquired=" + dateAcquired +
+                        "&UnitCost=" + itemCost +
+                        "&StockAvailable=" + itemQuantity +
+                        "&Supplier=" + supplier +
+                        "&Particular=" + category +
+                        "&PropertyStatus=" + status +
+                        "&WhereAbout=" + whereabout +
+                        "&Image=" + imageData +
+                        "&Unit=" + unit +
+                        "&SourceFund=" + sourceFund);
                 writer.close();
                 os.close();
 
