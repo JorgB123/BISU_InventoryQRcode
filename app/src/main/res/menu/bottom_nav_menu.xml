@@ -12,7 +12,8 @@
         android:icon="@drawable/icon_history"/>
     <item
         android:id="@+id/Scan"
-        android:title="" />
+        android:title=""
+        android:enabled="false"/>
     <item
         android:id="@+id/Inventory"
         android:title="Inventory"

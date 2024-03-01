@@ -1,5 +1,6 @@
 package com.example.bisu_inventoryqrcode;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,27 +8,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<String> itemList;
+    private ArrayList<ItemData> itemList; // Modify ArrayList type to hold ItemData objects
+    private Context context;
 
-    public RecyclerViewAdapter(ArrayList<String> itemList) {
+    public RecyclerViewAdapter(ArrayList<ItemData> itemList) {
         this.itemList = itemList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String item = itemList.get(position);
-        holder.bind(itemList.get(position));
+        ItemData itemData = itemList.get(position);
+        holder.descriptionTextView.setText(itemData.getDescription());
+        holder.stockAvailableTextView.setText(String.valueOf(itemData.getStockAvailable()));
+
+        // Load image using Glide library (or any other image loading library)
+        Glide.with(context).load(itemData.getImage()).into(holder.imageView);
     }
 
     @Override
@@ -36,17 +44,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
         ImageView imageView;
+        TextView descriptionTextView, stockAvailableTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textViewItem);
             imageView = itemView.findViewById(R.id.imageViewrec);
-        }
-
-        public void bind(String item) {
-            textView.setText(item);
+            descriptionTextView = itemView.findViewById(R.id.textViewDescription);
+            stockAvailableTextView = itemView.findViewById(R.id.textViewStockAvailable);
         }
     }
 }

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgj"
+    tools:context=".UserSettings">
+
+    <!-- Login as Administrator Item -->
+    <LinearLayout
+        android:id="@+id/loginAsAdminItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="250dp"
+        android:clickable="true"
+        android:focusable="true">
+
+    <ImageView
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:src="@drawable/ic_login"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login as Administrator"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:layout_marginStart="8dp"/>
+
+</LinearLayout>
+
+<TextView
+android:id="@+id/generalSettingsLabel"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginStart="16dp"
+android:layout_marginTop="18dp"
+android:textStyle="bold|normal"
+android:text="General Settings"
+android:textSize="35sp"
+android:textColor="@color/black"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toBottomOf="@id/loginAsAdminItem" />
+
+    <!-- About Item -->
+<LinearLayout
+android:id="@+id/aboutItem"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+app:layout_constraintTop_toBottomOf="@id/generalSettingsLabel"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+android:layout_marginTop="18dp"
+android:clickable="true"
+android:focusable="true">
+
+<ImageView
+    android:layout_width="40sp"
+    android:layout_height="40sp"
+    android:src="@drawable/ic_about"
+    android:layout_marginStart="16dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="About"
+    android:textSize="30sp"
+    android:textColor="@color/black"
+    android:layout_marginStart="8dp"/>
+
+</LinearLayout>
+
+    <!-- Terms and Conditions Item -->
+<LinearLayout
+android:id="@+id/termsItem"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+app:layout_constraintTop_toBottomOf="@id/aboutItem"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+android:layout_marginTop="18dp"
+android:clickable="true"
+android:focusable="true">
+
+<ImageView
+    android:layout_width="40sp"
+    android:layout_height="40sp"
+    android:src="@drawable/ic_terms"
+    android:layout_marginStart="16dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Terms and Conditions"
+    android:textColor="@color/black"
+    android:textSize="30sp"
+    android:layout_marginStart="8dp"/>
+
+</LinearLayout>
+
+    <!-- Privacy and Policy Item -->
+<LinearLayout
+android:id="@+id/privacyItem"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+app:layout_constraintTop_toBottomOf="@id/termsItem"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+android:layout_marginTop="18dp"
+android:clickable="true"
+android:focusable="true">
+
+<ImageView
+    android:layout_width="40sp"
+    android:layout_height="40sp"
+    android:src="@drawable/ic_privacy"
+    android:layout_marginStart="16dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Privacy and Policy"
+    android:textColor="@color/black"
+    android:textSize="30sp"
+    android:layout_marginStart="8dp"/>
+
+</LinearLayout>
+
+    <!-- Rate This App Item -->
+<LinearLayout
+android:id="@+id/rateAppItem"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+app:layout_constraintTop_toBottomOf="@id/privacyItem"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+android:layout_marginTop="18dp"
+android:clickable="true"
+android:focusable="true">
+
+<ImageView
+    android:layout_width="40sp"
+    android:layout_height="40sp"
+    android:src="@drawable/ic_rate"
+    android:layout_marginStart="16dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Rate This App"
+    android:textColor="@color/black"
+    android:textSize="30sp"
+    android:layout_marginStart="8dp"/>
+
+</LinearLayout>
+
+    <!-- Share This App Item -->
+<LinearLayout
+android:id="@+id/shareAppItem"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+app:layout_constraintTop_toBottomOf="@id/rateAppItem"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+android:layout_marginTop="18dp"
+android:clickable="true"
+android:focusable="true">
+
+<ImageView
+    android:layout_width="40sp"
+    android:layout_height="40sp"
+    android:src="@drawable/ic_share"
+    android:layout_marginStart="16dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Share This App"
+    android:textColor="@color/black"
+    android:textSize="30sp"
+    android:layout_marginStart="8dp"/>
+
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="193dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="146dp"
+        android:text="Settings"
+        android:textColor="#FFFFFF"
+        android:textSize="50sp"
+        android:textStyle="bold|normal"
+        app:layout_constraintBottom_toTopOf="@+id/loginAsAdminItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

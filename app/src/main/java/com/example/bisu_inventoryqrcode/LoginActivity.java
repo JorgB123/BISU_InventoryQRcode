@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                             String result = putData.getResult();
                             if (result.equals("Login Successfully")) {
                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), UserDashBoard.class);
                                 startActivity(intent);
                                 finish();
                             } else {

@@ -34,18 +34,9 @@ public class SignUp extends AppCompatActivity {
         IPAddress=ipAddressManager.getIPAddress();
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
-        settingsBtn=findViewById(R.id.settingsBUtton);
         register = findViewById(R.id.register);
         clicker=findViewById(R.id.clicker);
         settings= new Settings();
-
-        settingsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(SignUp.this,Settings.class);
-                startActivity(intent);
-            }
-        });
 
         clicker.setOnClickListener(new View.OnClickListener() {
             @Override

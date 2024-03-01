@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/qrCodeImage"
-        android:layout_width="match_parent"
-        android:layout_height="345dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="150dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/frame" />
 
     <Button
         android:id="@+id/scanner"
@@ -38,5 +30,28 @@
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="9dp"
         android:text="ADD INVENTory" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="130sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="193dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="525dp"
+        android:background="@drawable/banner"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="130sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="390dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="329dp"
+        android:background="@drawable/banner" />
 
 </RelativeLayout>

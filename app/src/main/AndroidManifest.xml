@@ -26,6 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UserSettings"
+            android:exported="false" />
+        <activity
             android:name=".UserScan"
             android:exported="false" />
         <activity
@@ -38,7 +41,7 @@
             android:name=".ViewInventory"
             android:exported="false" />
         <activity
-            android:name=".UserDashBoard"
+            android:name=".IntroActivity"
             android:exported="false"
             android:label="@string/title_activity_user_dash_board"
             android:theme="@style/Theme.BISU_InventoryQRcode" />
@@ -52,7 +55,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".IntroActivity"
+            android:name=".SignUp"
             android:exported="false" />
         <activity
             android:name=".CaptureActivityPortrait"
@@ -67,7 +70,7 @@
             android:name=".ScannedDataActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".UserDashBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

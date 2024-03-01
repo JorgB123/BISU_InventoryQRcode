@@ -17,7 +17,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class UserDashBoard extends AppCompatActivity {
 
     EditText search;
-    ImageView inventory_view, request_item, report_damage, scanner;
+    ImageView inventory_view, request_item, report_damage, scanner, settings_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class UserDashBoard extends AppCompatActivity {
         report_damage = findViewById(R.id.report_damage);
         request_item = findViewById(R.id.request_item);
         inventory_view = findViewById(R.id.inventory_view);
+        settings_user = findViewById(R.id.settings_user);
 
         inventory_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,14 @@ public class UserDashBoard extends AppCompatActivity {
                 Intent intent = new Intent(UserDashBoard.this, ViewInventory.class);
                 startActivity(intent);
 
+            }
+        });
+
+        settings_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDashBoard.this, UserSettings.class);
+                startActivity(intent);
             }
         });
 

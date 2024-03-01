@@ -498,7 +498,7 @@
                             android:background="@drawable/white_top_button">
 
                             <ImageView
-                                android:id="@+id/settings"
+                                android:id="@+id/settings_user"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
