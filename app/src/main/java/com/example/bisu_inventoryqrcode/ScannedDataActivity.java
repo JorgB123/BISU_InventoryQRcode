@@ -1,11 +1,12 @@
 package com.example.bisu_inventoryqrcode;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,10 +15,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -65,6 +69,7 @@ public class ScannedDataActivity extends AppCompatActivity {
     private Settings settings;
     private String ipAddress = "";
     private String currentPhotoPath;
+    private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,11 +130,9 @@ public class ScannedDataActivity extends AppCompatActivity {
                 String unit = unitSpinner.getSelectedItem().toString();
                 String sourceFund = sourceFundSpinner.getSelectedItem().toString();
 
-                String imageData = bitmapToBase64(selectedBitmap);
-
                 imageView.setImageResource(R.drawable.placeholder);
 
-                new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, supplier, category, status, whereabout, imageData, unit, sourceFund);
+                new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, supplier, category, status, whereabout, currentPhotoPath, unit, sourceFund);
                 descriptionEditText.getText().clear();
                 dateAcquiredEditText.getText().clear();
                 itemCostEditText.getText().clear();
@@ -152,6 +155,51 @@ public class ScannedDataActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Open date and time picker dialog when clicking on dateAcquiredEditText
+        dateAcquiredEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateTimePickerDialog();
+            }
+        });
+    }
+
+    private void showDateTimePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(ScannedDataActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // MonthOfYear is 0-based, so add 1 to display correctly
+                        String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, monthOfYear + 1, dayOfMonth);
+
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(ScannedDataActivity.this,
+                                new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d:00", hourOfDay, minute);
+
+                                        // Combine selected date and time
+                                        String selectedDateTime = selectedDate + " " + selectedTime;
+
+                                        // Set selected date and time to EditText
+                                        dateAcquiredEditText.setText(selectedDateTime);
+                                    }
+                                }, hour, minute, false);
+                        timePickerDialog.show();
+                    }
+                }, year, month, day);
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000); // Set min date as current date
+        datePickerDialog.show();
     }
 
     private void openImageChooser() {
@@ -253,7 +301,7 @@ public class ScannedDataActivity extends AppCompatActivity {
                 String category = params[6];
                 String status = params[7];
                 String whereabout = params[8];
-                String imageData = params[9];
+                String imagePath = params[9];
                 String unit = params[10];
                 String sourceFund = params[11];
 
@@ -274,7 +322,7 @@ public class ScannedDataActivity extends AppCompatActivity {
                         "&Particular=" + category +
                         "&PropertyStatus=" + status +
                         "&WhereAbout=" + whereabout +
-                        "&Image=" + imageData +
+                        "&Image=" + imagePath +
                         "&Unit=" + unit +
                         "&SourceFund=" + sourceFund);
                 writer.close();
@@ -309,6 +357,4 @@ public class ScannedDataActivity extends AppCompatActivity {
             });
         }
     }
-
-    // Other helper methods...
 }
