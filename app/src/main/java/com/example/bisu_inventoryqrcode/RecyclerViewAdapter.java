@@ -1,6 +1,9 @@
 package com.example.bisu_inventoryqrcode;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +37,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.descriptionTextView.setText(itemData.getDescription());
         holder.stockAvailableTextView.setText(String.valueOf(itemData.getStockAvailable()));
 
-        // Load image using Glide library (or any other image loading library)
-        Glide.with(context).load(itemData.getImage()).into(holder.imageView);
+        byte[] decodedBytes = Base64.decode(itemData.getImage(), Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        if (bitmap != null) {
+
+        }
+        holder.imageView.setImageBitmap(bitmap);
+
+
+
     }
 
     @Override
