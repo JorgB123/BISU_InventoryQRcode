@@ -40,7 +40,6 @@ public class ViewInventory extends AppCompatActivity {
     private ArrayList<ItemData> itemList = new ArrayList<>();
     private RecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-    ImageView image;
     private String ipAddress = "http://192.168.1.14/LoginRegister/fetch_data.php"; // Update with your actual URL
     ProgressBar progressBar;
 
