@@ -33,7 +33,7 @@
 
                 <ImageView
                     android:id="@+id/imageView7"
-                    android:layout_width="445dp"
+                    android:layout_width="match_parent"
                     android:layout_height="263dp"
                     android:src="@drawable/top_background"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +63,7 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/userNamePlaceholder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nicole Palwa"

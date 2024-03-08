@@ -104,17 +104,14 @@ public class ScannedDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-
                 try {
                     BitMatrix bitMatrix = multiFormatWriter.encode(currentDateandTime, BarcodeFormat.QR_CODE, 300, 300);
-
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     bitmap = barcodeEncoder.createBitmap(bitMatrix);
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byteArray = stream.toByteArray();
-
                 } catch (WriterException e) {
                     throw new RuntimeException(e);
                 }
@@ -132,15 +129,41 @@ public class ScannedDataActivity extends AppCompatActivity {
 
                 imageView.setImageResource(R.drawable.placeholder);
 
-                new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, supplier, category, status, whereabout, currentPhotoPath, unit, sourceFund);
-                descriptionEditText.getText().clear();
-                dateAcquiredEditText.getText().clear();
-                itemCostEditText.getText().clear();
-                itemQuantityEditText.getText().clear();
-                whereaboutEditText.getText().clear();
-                supplierNameEditText.getText().clear();
+                if (selectedBitmap != null) {
+                    // Convert the selectedBitmap to base64
+                    String imageBase64 = bitmapToBase64(selectedBitmap);
+                    new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, supplier, category, status, whereabout, imageBase64, unit, sourceFund);
+                    descriptionEditText.getText().clear();
+                    dateAcquiredEditText.getText().clear();
+                    itemCostEditText.getText().clear();
+                    itemQuantityEditText.getText().clear();
+                    whereaboutEditText.getText().clear();
+                    supplierNameEditText.getText().clear();
+                } else if (currentPhotoPath != null) {
+                    // Read the image file and convert it to base64
+                    File imgFile = new File(currentPhotoPath);
+                    if (imgFile.exists()) {
+                        try {
+                            selectedBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+                            String imageBase64 = bitmapToBase64(selectedBitmap);
+                            new InsertDataTask().execute(currentDateandTime, itemDescription, dateAcquired, itemCost, itemQuantity, supplier, category, status, whereabout, imageBase64, unit, sourceFund);
+                            descriptionEditText.getText().clear();
+                            dateAcquiredEditText.getText().clear();
+                            itemCostEditText.getText().clear();
+                            itemQuantityEditText.getText().clear();
+                            whereaboutEditText.getText().clear();
+                            supplierNameEditText.getText().clear();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    // Handle case where no image is selected or captured
+                    Toast.makeText(ScannedDataActivity.this, "Please select or capture an image", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,7 +20,7 @@ public class UserSettings extends AppCompatActivity {
         loginAsAdminItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AdminLogin.class);
                 startActivity(intent);
                 finish();
             }

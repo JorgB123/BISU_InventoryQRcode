@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="344dp"
         android:layout_x="0dp"
         android:layout_y="0dp"
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.22000003" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/admin_email"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="300dp"
         android:layout_height="60dp"
@@ -80,7 +80,7 @@
         android:paddingBottom="5dp" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/admin_password"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_x="56dp"
@@ -106,7 +106,7 @@
         app:srcCompat="@drawable/bisu" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/admin_login"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
