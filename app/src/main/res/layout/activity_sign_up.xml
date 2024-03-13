@@ -20,8 +20,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="352dp"
-        android:layout_height="418dp"
+        android:layout_width="350dp"
+        android:layout_height="504dp"
         android:background="@drawable/viewpager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="371dp"
-            android:layout_height="265dp"
+            android:layout_height="400dp"
             android:layout_marginTop="50dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,99 +43,268 @@
             app:layout_constraintTop_toTopOf="@+id/constraintLayout"
             app:layout_constraintVertical_bias="0.90999997">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="194dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutname"
-                    android:layout_width="321dp"
-                    android:layout_height="93dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_x="5dp"
-                    android:layout_y="201dp"
-                    app:endIconMode="clear_text"
-                    app:helperTextTextColor="@android:color/holo_red_dark">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/username"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="300dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/edittext"
-                        android:drawableStart="@drawable/icon_email"
-                        android:drawablePadding="16dp"
-                        android:hint="Email"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:paddingStart="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutFirstname"
+                        android:layout_width="321dp"
+                        android:layout_height="93dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_x="5dp"
+                        android:layout_y="201dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@android:color/holo_red_dark">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <EditText
+                            android:id="@+id/firstname"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="300dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/edittext"
+                            android:drawableStart="@drawable/icon_email"
+                            android:drawablePadding="16dp"
+                            android:hint="First Name"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputlayout"
-                    android:layout_width="318dp"
-                    android:layout_height="86dp"
-                    android:layout_below="@+id/layoutname"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_x="5dp"
-                    android:layout_y="201dp"
-                    app:helperTextTextColor="@android:color/holo_red_dark"
-                    app:passwordToggleEnabled="true">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/password"
-                        android:layout_width="300dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/edittext"
-                        android:drawableStart="@drawable/icon_lock"
-                        android:drawablePadding="16dp"
-                        android:hint="Password"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:paddingStart="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp"
-                        android:textColor="#0E0E0E" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutLastname"
+                        android:layout_width="321dp"
+                        android:layout_height="93dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_x="5dp"
+                        android:layout_y="201dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@android:color/holo_red_dark">
 
-            </LinearLayout>
+                        <EditText
+                            android:id="@+id/lastname"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="300dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/edittext"
+                            android:drawableStart="@drawable/icon_email"
+                            android:drawablePadding="16dp"
+                            android:hint="Last Name"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp" />
 
-            <Button
-                android:id="@+id/register"
-                android:layout_width="256dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_"
-                android:fontFamily="@font/montserrat_light"
-                android:padding="5dp"
-                android:text="Register"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="#ffffff"
-                android:textSize="18sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutname"
+                        android:layout_width="321dp"
+                        android:layout_height="93dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_x="5dp"
+                        android:layout_y="201dp"
+                        app:endIconMode="clear_text"
+                        app:helperTextTextColor="@android:color/holo_red_dark">
+
+                        <EditText
+                            android:id="@+id/username"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="300dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/edittext"
+                            android:drawableStart="@drawable/icon_email"
+                            android:drawablePadding="16dp"
+                            android:hint="Email"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputlayout"
+                        android:layout_width="318dp"
+                        android:layout_height="86dp"
+                        android:layout_below="@+id/layoutname"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_x="5dp"
+                        android:layout_y="201dp"
+                        app:helperTextTextColor="@android:color/holo_red_dark"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/password"
+                            android:layout_width="300dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/edittext"
+                            android:drawableStart="@drawable/icon_lock"
+                            android:drawablePadding="16dp"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:paddingStart="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#0E0E0E" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Inside the TextInputLayout for the password -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutDepartment"
+                        android:layout_width="318dp"
+                        android:layout_height="86dp"
+                        android:layout_below="@+id/inputlayout"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_x="5dp"
+                        android:layout_y="201dp"
+                        app:helperTextTextColor="@android:color/holo_red_dark">
+
+                        <Spinner
+                            android:id="@+id/departmentSpinner"
+                            android:layout_width="300dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/edittext"
+                            android:paddingStart="20dp"
+                            android:drawableStart="@drawable/baseline_arrow_drop_down_24"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp"
+                            android:entries="@array/department"
+                            android:hint="Select Department"
+                            android:popupBackground="#FFFFFF" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Inside the TextInputLayout for the department spinner -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutRole"
+                        android:layout_width="318dp"
+                        android:layout_height="86dp"
+                        android:layout_below="@id/layoutDepartment"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_x="5dp"
+                        android:layout_y="201dp"
+                        app:helperTextTextColor="@android:color/holo_red_dark">
+
+                        <Spinner
+                            android:id="@+id/roleSpinner"
+                            android:layout_width="300dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/edittext"
+                            android:paddingStart="20dp"
+                            android:drawableStart="@drawable/baseline_arrow_drop_down_24"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp"
+                            android:entries="@array/role"
+                            android:hint="Select Role"
+                            android:popupBackground="#FFFFFF" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/layoutDepartment">
+
+                        <EditText
+                            android:id="@+id/imageField"
+                            android:layout_width="300dp"
+                            android:layout_height="60dp"
+                            android:drawableStart="@drawable/baseline_album_24"
+                            android:hint="Choose an image"
+                            android:background="@drawable/edittext"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:layout_marginStart="30dp"
+                            android:clickable="true"
+                            android:drawablePadding="16dp"
+                            android:paddingStart="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/registerLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/constraintLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <Button
+                            android:id="@+id/register"
+                            android:layout_width="256dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/button_"
+                            android:fontFamily="@font/montserrat_light"
+                            android:padding="5dp"
+                            android:text="Register"
+                            android:textAlignment="center"
+                            android:textAllCaps="false"
+                            android:textColor="#ffffff"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
+
+
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="28dp"
             android:layout_weight="1"
             android:fontFamily="@font/castoro"
             android:text="SIGN UP"

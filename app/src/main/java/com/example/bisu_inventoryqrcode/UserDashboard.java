@@ -77,7 +77,7 @@ public class UserDashboard extends AppCompatActivity {
         settings_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDashboard.this, UserSettings.class);
+                Intent intent = new Intent(UserDashboard.this, MainActivity.class);
                 startActivity(intent);
             }
         });

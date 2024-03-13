@@ -41,6 +41,20 @@
         <!-- Add more source fund options as needed -->
     </string-array>
 
+    <string-array name="department">
+        <item>BSCS</item>
+        <item>HAS</item>
+        <item>EDUC</item>
+        <!-- Add more source fund options as needed -->
+    </string-array>
+
+    <string-array name="role">
+        <item>Faculty</item>
+        <item>Student</item>
+
+        <!-- Add more source fund options as needed -->
+    </string-array>
+
 
     <string name="title_activity_user_dash_board">UserDashBoard</string>
 </resources>
