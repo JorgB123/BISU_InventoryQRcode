@@ -26,6 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ItemDetails"
+            android:exported="false" />
+        <activity
             android:name=".AdminLogin"
             android:exported="false" />
         <activity
@@ -67,13 +70,13 @@
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".UserDashboard"
+            android:name=".SignUp"
             android:exported="false" />
         <activity
             android:name=".ScannedDataActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".UserDashboard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

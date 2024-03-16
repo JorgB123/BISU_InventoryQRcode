@@ -11,18 +11,27 @@ public class ItemData {
         this.image = image;
     }
 
-    // Getter methods for accessing the fields
-
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getStockAvailable() {
         return stockAvailable;
     }
 
+    public void setStockAvailable(int stockAvailable) {
+        this.stockAvailable = stockAvailable;
+    }
+
     public String getImage() {
         return image;
     }
-}
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+}

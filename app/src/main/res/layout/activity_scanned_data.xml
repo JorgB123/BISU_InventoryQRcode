@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/bgj"
     tools:context=".ScannedDataActivity">
 
     <RelativeLayout
@@ -81,6 +80,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="30dp"
+            android:inputType="number|numberDecimal"
             android:hint="Unit Cost">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -100,13 +100,14 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="30dp"
-            android:hint="Stock Available">
+            android:hint="Stock Available"
+            android:inputType="number|numberDecimal">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/itemQuantityEditText"
                 android:layout_width="match_parent"
-                android:background="@drawable/stroke"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Supplier Name -->
