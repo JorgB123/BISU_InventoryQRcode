@@ -36,12 +36,13 @@
             android:orientation="horizontal"
             android:gravity="start|center_vertical"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="Description:"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
@@ -65,18 +66,259 @@
             android:orientation="horizontal"
             android:gravity="start|center_vertical"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stock Available"
+                android:text="Stock Available: "
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/stock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Property Number: "
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/propertyNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Acquired: "
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/dateAcquired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unit: "
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/unit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unit Cost:"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/unitCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Supplier:"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/supplier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Particular:"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                />
+
+            <EditText
+                android:id="@+id/particular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Property Status: "
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/propertyStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Source Fund:"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/sourceFund"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext"
