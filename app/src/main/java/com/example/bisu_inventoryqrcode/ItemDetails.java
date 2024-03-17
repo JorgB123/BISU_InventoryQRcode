@@ -2,6 +2,7 @@ package com.example.bisu_inventoryqrcode;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,17 +11,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ItemDetails extends AppCompatActivity {
 
@@ -28,6 +19,7 @@ public class ItemDetails extends AppCompatActivity {
     private ActionBar mActionBar;
     private ImageView imageView;
     private EditText stockTextView, descriptionTextView, propertyNumberEditText, dateAcquiredEditText, unitEditText, unitCostEditText, supplierEditText, particularEditText, propertyStatusEditText, sourceFundEditText;
+    Button request_button, report_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +38,9 @@ public class ItemDetails extends AppCompatActivity {
         particularEditText = findViewById(R.id.particular);
         propertyStatusEditText = findViewById(R.id.propertyStatus);
         sourceFundEditText = findViewById(R.id.sourceFund);
+        request_button=findViewById(R.id.request_button);
+        report_button=findViewById(R.id.report_button);
+
 
         // Setting up action bar
         mToolbar = findViewById(R.id.toolbar);
@@ -67,55 +62,16 @@ public class ItemDetails extends AppCompatActivity {
 
             // Load image using Glide
             Glide.with(this).load(image).into(imageView);
+
+            // Set other data if needed
+            propertyNumberEditText.setText(intent.getStringExtra("PropertyNumber"));
+            dateAcquiredEditText.setText(intent.getStringExtra("DateAcquired"));
+            unitEditText.setText(intent.getStringExtra("Unit"));
+            unitCostEditText.setText(intent.getStringExtra("UnitCost"));
+            supplierEditText.setText(intent.getStringExtra("Supplier"));
+            particularEditText.setText(intent.getStringExtra("Particular"));
+            propertyStatusEditText.setText(intent.getStringExtra("PropertyStatus"));
+            sourceFundEditText.setText(intent.getStringExtra("SourceFund"));
         }
-
-        // Use Volley to retrieve additional data
-        retrieveAdditionalData();
-    }
-
-    private void retrieveAdditionalData() {
-        // Instantiate the RequestQueue
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.1.14/LoginRegister/fetchdetails.php";
-
-        // Request a JSON response from the provided URL
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            // Assuming the first item in the JSON array contains the desired data
-                            JSONObject jsonObject = response.getJSONObject(0);
-                            String propertyNumber = jsonObject.getString("PropertyNumber");
-                            String dateAcquired = jsonObject.getString("DateAcquired");
-                            String unit = jsonObject.getString("Unit");
-                            String unitCost = jsonObject.getString("UnitCost");
-                            String supplier = jsonObject.getString("Supplier");
-                            String particular = jsonObject.getString("Particular");
-                            String propertyStatus = jsonObject.getString("PropertyStatus");
-                            String sourceFund = jsonObject.getString("SourceFund");
-
-                            // Set retrieved data to respective EditText fields
-                            propertyNumberEditText.setText(propertyNumber);
-                            dateAcquiredEditText.setText(dateAcquired);
-                            unitEditText.setText(unit);
-                            unitCostEditText.setText(unitCost);
-                            supplierEditText.setText(supplier);
-                            particularEditText.setText(particular);
-                            propertyStatusEditText.setText(propertyStatus);
-                            sourceFundEditText.setText(sourceFund);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        // Add the request to the RequestQueue
-        queue.add(jsonArrayRequest);
     }
 }

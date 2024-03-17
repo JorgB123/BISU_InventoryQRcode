@@ -73,9 +73,18 @@ public class ViewInventory extends AppCompatActivity {
                 for (int i = 0; i < dataArray.length(); i++) {
                     JSONObject dataObject = dataArray.getJSONObject(i);
                     String description = dataObject.getString("Description");
-                    int stockAvailable = dataObject.optInt("StockAvailable", 0); // Default value if not present
+                    int stockAvailable = dataObject.optInt("StockAvailable", 0);
                     String image = dataObject.optString("Image", "");
-                    itemList.add(new ItemData(description, stockAvailable, image));
+                    String propertyNumber = dataObject.optString("PropertyNumber", "");
+                    String dateAcquired = dataObject.optString("DateAcquired", "");
+                    String unit = dataObject.optString("Unit", "");
+                    String unitCost = dataObject.optString("UnitCost", "");
+                    String supplier = dataObject.optString("Supplier", "");
+                    String particular = dataObject.optString("Particular", "");
+                    String propertyStatus = dataObject.optString("PropertyStatus", "");
+                    String sourceFund = dataObject.optString("SourceFund", "");
+                    itemList.add(new ItemData(description, stockAvailable, image, propertyNumber, dateAcquired, unit,
+                            unitCost, supplier, particular, propertyStatus, sourceFund));
                 }
                 adapter = new RecyclerViewAdapter(itemList);
                 recyclerView.setAdapter(adapter);
@@ -87,4 +96,5 @@ public class ViewInventory extends AppCompatActivity {
             Log.d("ViewInventory", e.getMessage());
         }
     }
+
 }

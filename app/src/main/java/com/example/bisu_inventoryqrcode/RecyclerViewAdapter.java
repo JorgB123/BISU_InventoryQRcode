@@ -47,10 +47,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("Description", itemData.getDescription());
                 intent.putExtra("StockAvailable", itemData.getStockAvailable());
                 intent.putExtra("Image", itemData.getImage());
-                // Add other data if needed
+                // Add other data
+                intent.putExtra("PropertyNumber", itemData.getPropertyNumber());
+                intent.putExtra("DateAcquired", itemData.getDateAcquired());
+                intent.putExtra("Unit", itemData.getUnit());
+                intent.putExtra("UnitCost", itemData.getUnitCost());
+                intent.putExtra("Supplier", itemData.getSupplier());
+                intent.putExtra("Particular", itemData.getParticular());
+                intent.putExtra("PropertyStatus", itemData.getPropertyStatus());
+                intent.putExtra("SourceFund", itemData.getSourceFund());
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override
