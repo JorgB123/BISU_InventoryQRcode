@@ -48,10 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(view -> {
-          String Email = String.valueOf(usernameEditText.getText());
-          String Password = String.valueOf(passwordEditText.getText());
-
-
+            String Email = String.valueOf(usernameEditText.getText());
+            String Password = String.valueOf(passwordEditText.getText());
 
             if (!Email.equals("") && !Password.equals("")) {
                 Handler handler = new Handler();
@@ -66,15 +64,20 @@ public class LoginActivity extends AppCompatActivity {
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             String result = putData.getResult();
-                            if (result.equals("Login Successfully")) {
-                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                            if (!result.startsWith("Error:")) {
+                                // Splitting the result string to extract UserID and FirstName
+                                String[] userData = result.split(",");
+                                String userID = userData[0]; // UserID
+                                String firstName = userData[1]; // FirstName
+
+                                // Creating the Intent with UserID and FirstName extras
                                 Intent intent = new Intent(getApplicationContext(), UserDashboard.class);
-                                intent.putExtra("Email", Email);
+                                intent.putExtra("UserID", userID);
+                                intent.putExtra("FirstName", firstName);
                                 startActivity(intent);
                                 finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     }
@@ -83,7 +86,5 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
-

@@ -33,6 +33,7 @@ public class UserDashboard extends AppCompatActivity {
     TextView userNamePlaceholder;
     String ipAddress="";//hjhj
     String userId = "";
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,10 @@ public class UserDashboard extends AppCompatActivity {
         request_item = findViewById(R.id.request_item);
         inventory_view = findViewById(R.id.inventory_view);
         settings_user = findViewById(R.id.settings_user);
+
+        id=getIntent().getStringExtra("FirstName");
+        userNamePlaceholder.setText(id);
+
 
         // Retrieve user ID or email from intent
         Intent intent = getIntent();
@@ -136,7 +141,7 @@ public class UserDashboard extends AppCompatActivity {
         @Override
         protected void onPostExecute(String firstName) {
             // Update TextView with user's first name
-            userNamePlaceholder.setText(firstName);
+          //  userNamePlaceholder.setText(firstName);
             Log.d("UserDashboard", "Fetched first name: " + firstName);
 
         }

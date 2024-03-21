@@ -61,7 +61,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".UserDashboard"
             android:exported="false" />
         <activity
             android:name=".CaptureActivityPortrait"
@@ -76,7 +76,7 @@
             android:name=".ScannedDataActivity"
             android:exported="false" />
         <activity
-            android:name=".UserDashboard"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
