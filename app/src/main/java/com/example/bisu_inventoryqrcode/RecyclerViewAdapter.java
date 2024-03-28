@@ -17,6 +17,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<ItemData> itemList; // Modify ArrayList type to hold ItemData objects
     private Context context;
 
+        private String userID;
+
     public RecyclerViewAdapter(ArrayList<ItemData> itemList) {
         this.itemList = itemList;
     }
@@ -56,6 +58,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("Particular", itemData.getParticular());
                 intent.putExtra("PropertyStatus", itemData.getPropertyStatus());
                 intent.putExtra("SourceFund", itemData.getSourceFund());
+
+                intent.putExtra("UserID", itemData.getUserID());
                 context.startActivity(intent);
             }
         });

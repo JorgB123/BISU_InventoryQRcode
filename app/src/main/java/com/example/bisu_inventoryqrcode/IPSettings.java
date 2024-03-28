@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 public class IPSettings extends Fragment {
 
-    public String ipAddress="http://192.168.23.57";
+    public String ipAddress="http://192.168.1.16";
     Button save, signup;
     EditText ipAddressET;
 

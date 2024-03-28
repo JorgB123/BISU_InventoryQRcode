@@ -27,17 +27,22 @@ public class ViewInventory extends AppCompatActivity {
     private ArrayList<ItemData> itemList = new ArrayList<>();
     private RecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-    private String ipAddress = "http://192.168.1.14/LoginRegister/fetch_data.php"; // Update with your actual URL
+    private String ipAddress = "http://192.168.1.16/LoginRegister/fetch_data.php"; // Update with your actual URL
     private ProgressBar progressBar;
+
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_inventory);
 
+        userID = getIntent().getStringExtra("UserID");
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = findViewById(R.id.progressbar);
+        System.out.println("kani"+userID);
 
         fetchDataFromServer();
     }
@@ -84,7 +89,7 @@ public class ViewInventory extends AppCompatActivity {
                     String propertyStatus = dataObject.optString("PropertyStatus", "");
                     String sourceFund = dataObject.optString("SourceFund", "");
                     itemList.add(new ItemData(description, stockAvailable, image, propertyNumber, dateAcquired, unit,
-                            unitCost, supplier, particular, propertyStatus, sourceFund));
+                            unitCost, supplier, particular, propertyStatus, sourceFund, userID));
                 }
                 adapter = new RecyclerViewAdapter(itemList);
                 recyclerView.setAdapter(adapter);

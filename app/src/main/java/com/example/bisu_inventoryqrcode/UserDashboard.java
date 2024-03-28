@@ -33,7 +33,7 @@ public class UserDashboard extends AppCompatActivity {
     TextView userNamePlaceholder;
     String ipAddress="";//hjhj
     String userId = "";
-    String id;
+    String id, fn, userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,10 @@ public class UserDashboard extends AppCompatActivity {
         inventory_view = findViewById(R.id.inventory_view);
         settings_user = findViewById(R.id.settings_user);
 
-        id=getIntent().getStringExtra("FirstName");
-        userNamePlaceholder.setText(id);
+        userID=getIntent().getStringExtra("UserID");
+        fn=getIntent().getStringExtra("FirstName");
+        userNamePlaceholder.setText(fn);
+        Log.d("yawa",userID);
 
 
         // Retrieve user ID or email from intent
@@ -73,8 +75,10 @@ public class UserDashboard extends AppCompatActivity {
         inventory_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDashboard.this, ViewInventory.class);
+                Intent intent = new Intent(UserDashboard.this, ViewInventoryItem.class);
+                intent.putExtra("UserID", userID);
                 startActivity(intent);
+
             }
         });
 

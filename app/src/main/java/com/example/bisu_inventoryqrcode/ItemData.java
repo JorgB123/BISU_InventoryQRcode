@@ -13,8 +13,10 @@ public class ItemData {
     private String propertyStatus;
     private String sourceFund;
 
+    private String userID;
+
     public ItemData(String description, int stockAvailable, String image, String propertyNumber, String dateAcquired,
-                    String unit, String unitCost, String supplier, String particular, String propertyStatus, String sourceFund) {
+                    String unit, String unitCost, String supplier, String particular, String propertyStatus, String sourceFund, String userID) {
         this.description = description;
         this.stockAvailable = stockAvailable;
         this.image = image;
@@ -26,6 +28,7 @@ public class ItemData {
         this.particular = particular;
         this.propertyStatus = propertyStatus;
         this.sourceFund = sourceFund;
+        this.userID = userID;
     }
 
     public String getDescription() {
@@ -113,5 +116,13 @@ public class ItemData {
 
     public void setSourceFund(String sourceFund) {
         this.sourceFund = sourceFund;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

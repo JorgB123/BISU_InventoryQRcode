@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class IPAddressManager {
 
-    String defaultIPAddress="http://192.168.1.14";
+    String defaultIPAddress="http://192.168.1.16";
     private static final String PREF_NAME = "IPAddressPref";
     private static final String KEY_IP_ADDRESS = "ipAddress";
 
