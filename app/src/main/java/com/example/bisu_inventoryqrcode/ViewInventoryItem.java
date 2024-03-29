@@ -69,7 +69,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
 
     @Override
     public void onItemClick(responsemodel item) {
-        Intent intent = new Intent(this, ItemDetails.class);
+        Intent intent = new Intent(this, DetailActivity.class);
 
         // Pass relevant data from the clicked item as intent extras
         intent.putExtra("Description", item.getDescription());
