@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#C2BEBE"
-    tools:context=".ItemDetails">
+    tools:context=".UserDashboard">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="180dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/viewpager"
@@ -56,17 +56,15 @@
 
                     <TextView
                         android:id="@+id/descrip"
+                        android:layout_marginStart="50dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="50dp"
                         android:layout_weight="1"
-                        android:text="Computerjhjcjcjjcjxjjcjxjcxjcjxjcxjcjxjjxcjxjjcjjxcjxjcxjcjxjcxjcjxjxcjj"
-                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:textSize="25dp"
                         android:textColor="@color/black"
-                        android:textSize="23dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:text="Computer" />
 
                     <!-- Original TextViews -->
                     <LinearLayout
@@ -89,10 +87,10 @@
                             android:textColor="@color/black"
                             android:layout_width="100dp"
                             android:layout_marginStart="20dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="15dp"
-                            android:text="12"
-                            android:gravity="center_vertical"/>
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:text="12"
+                        android:gravity="center_vertical"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -115,10 +113,10 @@
                             android:textColor="@color/black"
                             android:layout_width="100dp"
                             android:layout_marginStart="7dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="15dp"
-                            android:text="7347634"
-                            android:gravity="center_vertical"/>
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:text="7347634"
+                        android:gravity="center_vertical"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -141,11 +139,11 @@
                             android:id="@+id/borrowers_id"
                             android:textColor="@color/black"
                             android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="15dp"
-                            android:text="13"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:text="13"
                             android:layout_marginStart="33dp"
-                            android:gravity="center_vertical"/>
+                        android:gravity="center_vertical"/>
 
                     </LinearLayout>
 

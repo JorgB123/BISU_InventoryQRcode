@@ -44,9 +44,9 @@ public class ItemDetails extends AppCompatActivity {
     private Toolbar mToolbar;
     private ActionBar mActionBar;
     private ImageView imageView;
-    private EditText stockTextView, descriptionTextView, propertyNumberEditText, dateAcquiredEditText, unitEditText, unitCostEditText, supplierEditText, particularEditText, propertyStatusEditText, sourceFundEditText;
+    private TextView descrip, stock, propertyNumber, borrowers_id;
     Button request_button, report_button;
-    private EditText borrowers_id, date, time, quantity, purposeEditText;
+    private EditText  date, time, quantity, purposeEditText;
 
     String userID;
 
@@ -64,10 +64,10 @@ public class ItemDetails extends AppCompatActivity {
         IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
         ipAddress = ipAddressManager.getIPAddress();
         // Initialize views
-        imageView = findViewById(R.id.image_view);
-        stockTextView = findViewById(R.id.stock);
-        descriptionTextView = findViewById(R.id.descrip);
-        propertyNumberEditText = findViewById(R.id.propertyNumber);
+       // imageView = findViewById(R.id.image_view);
+        stock = findViewById(R.id.stock);
+        descrip = findViewById(R.id.descrip);
+        propertyNumber = findViewById(R.id.propertyNumber);
         date = findViewById(R.id.dateAcquired);
         time = findViewById(R.id.time);
         quantity = findViewById(R.id.quantity);
@@ -98,7 +98,7 @@ public class ItemDetails extends AppCompatActivity {
                 String status = ""; // Get status data if available
                 String purpose = purposeEditText.getText().toString();
                 String userID = borrowers_id.getText().toString();
-                String propertyID = propertyNumberEditText.getText().toString();
+                String propertyID = propertyNumber.getText().toString();
 
                 // Check if any of the fields are empty
                 if (TextUtils.isEmpty(dateAcquired) || TextUtils.isEmpty(timeAcquired) || TextUtils.isEmpty(itemQuantity)
@@ -166,10 +166,7 @@ public class ItemDetails extends AppCompatActivity {
 
 
         // Setting up action bar
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        mActionBar = getSupportActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
+
 
         // Retrieve data from the intent
         Intent intent = getIntent();
@@ -179,15 +176,15 @@ public class ItemDetails extends AppCompatActivity {
             String image = intent.getStringExtra("Image");
 
             // Set data to views
-            mActionBar.setTitle(description); // Set title to description
-            descriptionTextView.setText(description);
-            stockTextView.setText(String.valueOf(stockAvailable));
+            //mActionBar.setTitle(description); // Set title to description
+            descrip.setText(description);
+            stock.setText(String.valueOf(stockAvailable));
 
             // Load image using Glide
-            Glide.with(this).load("http://192.168.1.16/LoginRegister/item_images/"+image).into(imageView);
+           // Glide.with(this).load("http://192.168.1.16/LoginRegister/item_images/"+image).into(imageView);
 
             // Set other data if needed
-            propertyNumberEditText.setText(intent.getStringExtra("PropertyNumber"));
+            propertyNumber.setText(intent.getStringExtra("PropertyNumber"));
             borrowers_id.setText(intent.getStringExtra("UserID"));
             System.out.println("naa ba"+userID);
 

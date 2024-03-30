@@ -100,7 +100,6 @@
                         android:id="@+id/stock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="150dp"
                         android:layout_weight="1"
                         android:text="$12"
                         android:textColor="@color/black"
@@ -182,30 +181,31 @@
                     app:layout_constraintTop_toBottomOf="@id/linear2" />
 
                 <LinearLayout
+                    android:id="@+id/buttonsContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="60dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view2">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button5"
+                        android:id="@+id/req_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@drawable/green_button"
-                        android:textColor="@color/white"
-                        android:text="Request" />
+                        android:text="Request"
+                        android:textColor="@color/white" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/button6"
+                        android:id="@+id/report_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
-                        android:background="@drawable/orange_button"
                         android:layout_weight="1"
-                        android:textColor="@color/white"
-                        android:text="Report" />
+                        android:background="@drawable/orange_button"
+                        android:text="Report"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
