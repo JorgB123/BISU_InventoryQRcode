@@ -108,13 +108,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="15dp"
-                            android:text="Property Number:" />
+                            android:text="Property ID:" />
 
                         <TextView
                             android:id="@+id/propertyNumber"
                             android:textColor="@color/black"
                             android:layout_width="100dp"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="46dp"
                             android:layout_height="wrap_content"
                             android:textSize="15dp"
                             android:text="7347634"

@@ -44,7 +44,7 @@ public class ItemDetails extends AppCompatActivity {
     private Toolbar mToolbar;
     private ActionBar mActionBar;
     private ImageView imageView;
-    private TextView descrip, stock, propertyNumber, borrowers_id;
+    private TextView descrip, stock, propertyID, borrowers_id;
     Button request_button, report_button;
     private EditText  date, time, quantity, purposeEditText;
 
@@ -67,7 +67,7 @@ public class ItemDetails extends AppCompatActivity {
        // imageView = findViewById(R.id.image_view);
         stock = findViewById(R.id.stock);
         descrip = findViewById(R.id.descrip);
-        propertyNumber = findViewById(R.id.propertyNumber);
+        propertyID = findViewById(R.id.propertyNumber);
         date = findViewById(R.id.dateAcquired);
         time = findViewById(R.id.time);
         quantity = findViewById(R.id.quantity);
@@ -95,14 +95,14 @@ public class ItemDetails extends AppCompatActivity {
                 String dateAcquired = date.getText().toString();
                 String timeAcquired = time.getText().toString();
                 String itemQuantity = quantity.getText().toString();
-                String status = ""; // Get status data if available
+                String status = "trfy"; // Get status data if available
                 String purpose = purposeEditText.getText().toString();
                 String userID = borrowers_id.getText().toString();
-                String propertyID = propertyNumber.getText().toString();
+                String propertyId = propertyID.getText().toString();
 
                 // Check if any of the fields are empty
                 if (TextUtils.isEmpty(dateAcquired) || TextUtils.isEmpty(timeAcquired) || TextUtils.isEmpty(itemQuantity)
-                        || TextUtils.isEmpty(purpose) || TextUtils.isEmpty(userID) || TextUtils.isEmpty(propertyID)) {
+                        || TextUtils.isEmpty(purpose) || TextUtils.isEmpty(userID) || TextUtils.isEmpty(propertyId)) {
                     // Show a Toast message indicating that some fields are empty
                     Toast.makeText(ItemDetails.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return; // Exit the onClick method if any field is empty
@@ -114,7 +114,7 @@ public class ItemDetails extends AppCompatActivity {
                     public void run() {
                         // Prepare data for POST request
                         String[] field = {"Date", "Time", "Quantity", "Status", "Purpose", "UserID", "PropertyID"};
-                        String[] data = {dateAcquired, timeAcquired, itemQuantity, status, purpose, userID, propertyID};
+                        String[] data = {dateAcquired, timeAcquired, itemQuantity, status, purpose, userID, propertyId};
 
                         // Perform POST request using PutData
                         PutData putData = new PutData(ipAddress + "/LoginRegister/request_item.php", "POST", field, data);
@@ -128,8 +128,10 @@ public class ItemDetails extends AppCompatActivity {
                                     String message = jsonObject.getString("message");
                                     if (success) {
                                         Toast.makeText(ItemDetails.this, message, Toast.LENGTH_SHORT).show();
-                                        // Proceed to next activity if needed
-                                        // startActivity(new Intent(ItemDetails.this, NextActivity.class));
+                                        date.getText().clear();
+                                        time.getText().clear();
+                                        quantity.getText().clear();
+                                        purposeEditText.getText().clear();
                                     } else {
                                         Toast.makeText(ItemDetails.this, message, Toast.LENGTH_SHORT).show();
                                     }
@@ -184,7 +186,7 @@ public class ItemDetails extends AppCompatActivity {
            // Glide.with(this).load("http://192.168.1.16/LoginRegister/item_images/"+image).into(imageView);
 
             // Set other data if needed
-            propertyNumber.setText(intent.getStringExtra("PropertyNumber"));
+            propertyID.setText(intent.getStringExtra("PropertyID"));
             borrowers_id.setText(intent.getStringExtra("UserID"));
             System.out.println("naa ba"+userID);
 

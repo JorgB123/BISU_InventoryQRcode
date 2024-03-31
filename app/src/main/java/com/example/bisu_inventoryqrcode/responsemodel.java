@@ -5,6 +5,7 @@ public class responsemodel
 
     String PropertyID,Description, StockAvailable, Image, PropertyNumber, UserID;
 
+
     public responsemodel() {
 
     }

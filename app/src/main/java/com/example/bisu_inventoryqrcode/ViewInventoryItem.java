@@ -77,6 +77,8 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         intent.putExtra("Image", item.getImage());
         intent.putExtra("PropertyNumber",item.getPropertyNumber());
         intent.putExtra("UserID", userID);
+        intent.putExtra("PropertyID",item.getPropertyID());
+
         // Add more data if needed
 
         // Start the ItemDetails activity

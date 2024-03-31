@@ -13,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -161,10 +166,55 @@ public class UserDashboard extends AppCompatActivity {
             } else {
                 Log.d("MainActivity", "Scanned");
                 String scannedResult = intentResult.getContents();
-                Toast.makeText(UserDashboard.this, "Scanned: " + scannedResult, Toast.LENGTH_LONG).show();
+                fetchItemInformation(scannedResult);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    private void fetchItemInformation(String propertyNumber) {
+        // Perform HTTP request to fetch item information from server
+        String url = "http://" + ipAddress + "/getInventoryItemInfo.php?PropertyNumber=" + propertyNumber;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            if (success) {
+                                JSONObject item = response.getJSONObject("item");
+                                // Parse and display item information
+                                String description = item.getString("Description");
+                                String stock = item.getString("StockAvailable");
+                                // Update UI with item information
+                                // For example, display in TextViews
+                                // descriptionTextView.setText(description);
+                                // stockTextView.setText(stock);
+                                System.out.println("description"+description);
+                                System.out.println("description"+stock);
+                                Log.d("kinhason", description);
+                            } else {
+                                String message = response.getString("message");
+                                Toast.makeText(UserDashboard.this, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(UserDashboard.this, "Error parsing response", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(UserDashboard.this, "Error fetching item information", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // Add the request to the RequestQueue
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
+    }
+
 }
