@@ -26,6 +26,26 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AfterScannedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyReport"
+            android:exported="false" />
+        <activity
+            android:name=".MyRequest"
+            android:exported="false" />
+        <activity
+            android:name=".ReqReport"
+            android:exported="false" />
+        <activity
+            android:name=".RequestAndReports"
+            android:exported="false"
+            android:label="@string/title_activity_request_and_reports"
+            android:theme="@style/Theme.BISU_InventoryQRcode" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".DetailActivity"
             android:exported="false" />
         <activity

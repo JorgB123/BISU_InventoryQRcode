@@ -54,6 +54,8 @@ public class ItemDetails extends AppCompatActivity {
 
     private String ipAddress = "";
 
+    ImageView backtoReq;
+
 
 
     @Override
@@ -75,6 +77,17 @@ public class ItemDetails extends AppCompatActivity {
         borrowers_id = findViewById(R.id.borrowers_id);
         request_button=findViewById(R.id.request_button);
 
+        backtoReq=findViewById(R.id.backtoReq);
+
+        backtoReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ItemDetails.this, DetailActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         calendar = Calendar.getInstance();
 
         // Set current date to dateEditText
@@ -95,7 +108,7 @@ public class ItemDetails extends AppCompatActivity {
                 String dateAcquired = date.getText().toString();
                 String timeAcquired = time.getText().toString();
                 String itemQuantity = quantity.getText().toString();
-                String status = "trfy"; // Get status data if available
+                String status = "Requesting"; // Get status data if available
                 String purpose = purposeEditText.getText().toString();
                 String userID = borrowers_id.getText().toString();
                 String propertyId = propertyID.getText().toString();
@@ -188,9 +201,7 @@ public class ItemDetails extends AppCompatActivity {
             // Set other data if needed
             propertyID.setText(intent.getStringExtra("PropertyID"));
             borrowers_id.setText(intent.getStringExtra("UserID"));
-            System.out.println("naa ba"+userID);
 
-            userID = intent.getStringExtra("UserID");
         }
     }
     private void showDatePicker() {

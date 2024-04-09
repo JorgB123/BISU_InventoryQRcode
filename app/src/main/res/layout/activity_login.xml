@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#EAE9E9"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -178,8 +178,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_light"
         android:text="Doesn't have an account?"
+        android:layout_marginTop="30dp"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.299"
@@ -194,7 +195,8 @@
         android:fontFamily="@font/montserrat_light"
         android:text="Click Here"
         android:textColor="#028FFF"
-        android:textSize="14sp"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.755"

@@ -30,6 +30,8 @@ public class DetailActivity extends AppCompatActivity {
     String propertyNumber, userID, description, stockAvailable, propertyID;
     private String ipAddress = "";
 
+    ImageView backToRec;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,17 @@ public class DetailActivity extends AppCompatActivity {
         descrip = findViewById(R.id.descrip);
         report_btn = findViewById(R.id.report_btn);
         req_btn = findViewById(R.id.req_btn);
+        backToRec = findViewById(R.id.backToRec);
+
+        backToRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, ViewInventoryItem.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         // Set onClickListener for req_btn
         req_btn.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +126,7 @@ public class DetailActivity extends AppCompatActivity {
             descrip.setText(description);
             stock.setText(stockAvailable);
             // Load image using Glide
-            Glide.with(this).load("http://192.168.1.16/LoginRegister/item_images/" + image).into(imageView);
+            Glide.with(this).load("http://192.168.1.11/LoginRegister/item_images/" + image).into(imageView);
         }
     }
 

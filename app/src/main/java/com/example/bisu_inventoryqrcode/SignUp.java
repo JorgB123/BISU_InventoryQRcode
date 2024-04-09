@@ -40,10 +40,15 @@ public class SignUp extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private Uri imageUri;
 
+    private LoadingAlert loadingAlert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        loadingAlert = new LoadingAlert(this);
+
 
         ipAddressManager = new IPAddressManager(this);
         IPAddress = ipAddressManager.getIPAddress();
@@ -77,6 +82,9 @@ public class SignUp extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                loadingAlert.startAlertDialog();
+
                 String Email = String.valueOf(usernameEditText.getText());
                 String Password = String.valueOf(passwordEditText.getText());
                 String FirstName = String.valueOf(firstNameEditText.getText());
@@ -115,12 +123,13 @@ public class SignUp extends AppCompatActivity {
 
                             // Prepare data for POST request
                             String[] field = {"Email", "Password", "Firstname", "Lastname", "Department", "Role", "image"};
-                            String[] data = {Email, Password, FirstName, LastName, Department, Role, Base64.encodeToString(imageBytes, Base64.DEFAULT)};
+                            String[] data = {Email, Password, FirstName, LastName, Department, Role, imageBytes != null ? Base64.encodeToString(imageBytes, Base64.DEFAULT) : ""};
 
                             // Perform POST request using PutData
                             PutData putData = new PutData(IPAddress + "/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
+                                    loadingAlert.closeAlertDialog();
                                     String result = putData.getResult();
                                     if (result.equals("Sign Up Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
@@ -135,6 +144,7 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
                 } else {
+                    loadingAlert.closeAlertDialog();
                     Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C2BEBE"
+    android:background="#EAE9E9"
     tools:context=".UserDashboard">
 
     <ScrollView
@@ -108,7 +108,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="Video Call"
                             android:textAlignment="center"
                             android:textColor="#ffffff"
                             android:textStyle="bold" />
@@ -134,7 +133,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="Notification"
                             android:textAlignment="center"
                             android:textColor="#ffffff"
                             android:textStyle="bold" />
@@ -160,7 +158,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="Voice Call"
                             android:textAlignment="center"
                             android:textColor="#ffffff"
                             android:textStyle="bold" />
@@ -255,18 +252,18 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/white_top_button">
 
                             <ImageView
                                 android:id="@+id/inventory_view"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
                                 android:layout_marginBottom="16dp"
-                                android:src="@drawable/ic_1"
+                                android:src="@drawable/baseline_inventory_24"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -299,8 +296,8 @@
 
                             <ImageView
                                 android:id="@+id/request_item"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
@@ -309,7 +306,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_2" />
+                                app:srcCompat="@drawable/dada" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -338,8 +335,8 @@
 
                             <ImageView
                                 android:id="@+id/report_damage"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
@@ -348,7 +345,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_4" />
+                                app:srcCompat="@drawable/baseline_report_24" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -376,8 +373,8 @@
 
                             <ImageView
                                 android:id="@+id/scanner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
@@ -386,7 +383,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_3" />
+                                app:srcCompat="@drawable/baseline_qr_code_scanner_24" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView

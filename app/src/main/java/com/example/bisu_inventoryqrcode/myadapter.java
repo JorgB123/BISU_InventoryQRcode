@@ -59,7 +59,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
         public void bind(final responsemodel item, final OnItemClickListener listener) {
             t1.setText(item.getDescription());
             t2.setText(item.getStockAvailable());
-            Glide.with(itemView.getContext()).load("http://192.168.1.16/LoginRegister/item_images/" + item.getImage()).into(img);
+            Glide.with(itemView.getContext()).load("http://192.168.1.11/LoginRegister/item_images/" + item.getImage()).into(img);
 
             // Set click listener
             itemView.setOnClickListener(new View.OnClickListener() {

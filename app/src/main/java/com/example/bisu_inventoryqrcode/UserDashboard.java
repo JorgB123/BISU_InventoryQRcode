@@ -1,51 +1,78 @@
 package com.example.bisu_inventoryqrcode;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+        import androidx.annotation.Nullable;
+        import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.content.Intent;
+        import android.os.AsyncTask;
+        import android.os.Bundle;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.EditText;
+        import android.widget.ImageView;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+        import com.example.bisu_inventoryqrcode.ApiService;
+        import com.example.bisu_inventoryqrcode.CaptureActivityPortrait;
+        import com.example.bisu_inventoryqrcode.IPAddressManager;
+        import com.example.bisu_inventoryqrcode.Item;
+        import com.example.bisu_inventoryqrcode.ItemResponse;
+        import com.example.bisu_inventoryqrcode.MainActivity;
+        import com.example.bisu_inventoryqrcode.R;
+        import com.example.bisu_inventoryqrcode.ViewInventoryItem;
+        import com.google.gson.Gson;
+        import com.google.gson.GsonBuilder;
+        import com.google.zxing.integration.android.IntentIntegrator;
+        import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStream;
+        import java.io.InputStreamReader;
+        import java.net.HttpURLConnection;
+        import java.net.URL;
+        import java.util.Objects;
+
+        import retrofit2.Call;
+        import retrofit2.Callback;
+        import retrofit2.Response;
+        import retrofit2.Retrofit;
+        import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserDashboard extends AppCompatActivity {
 
     EditText search;
-    ImageView inventory_view, request_item, report_damage, scanner, settings_user;
+    ImageView inventory_view, request_item, report_damage, scanner, settings_user, more;
     TextView userNamePlaceholder;
-    String ipAddress="";//hjhj
+    String ipAddress = ""; //hjhj
     String userId = "";
     String id, fn, userID;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_dash_board);
 
-        // Initialize EditText
+        IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
+        ipAddress = ipAddressManager.getIPAddress();
+
+
+
+
+
+
+
         search = findViewById(R.id.search);
         userNamePlaceholder = findViewById(R.id.userNamePlaceholder);
 
-        IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
-        ipAddress=ipAddressManager.getIPAddress();
 
         // Initialize ImageViews
         scanner = findViewById(R.id.scanner);
@@ -53,23 +80,21 @@ public class UserDashboard extends AppCompatActivity {
         request_item = findViewById(R.id.request_item);
         inventory_view = findViewById(R.id.inventory_view);
         settings_user = findViewById(R.id.settings_user);
+        more = findViewById(R.id.more);
 
-        userID=getIntent().getStringExtra("UserID");
-        fn=getIntent().getStringExtra("FirstName");
+        userID = getIntent().getStringExtra("UserID");
+        fn = getIntent().getStringExtra("FirstName");
         userNamePlaceholder.setText(fn);
-        Log.d("yawa",userID);
 
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDashboard.this, ReqReport.class);
+                intent.putExtra("UserID", userID);
+                startActivity(intent);
+            }
+        });
 
-        // Retrieve user ID or email from intent
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("Email")) {
-            userId = intent.getStringExtra("Email");
-            Log.d("UserDashboard", "Fetched Email: " + userId);
-
-        }
-
-        // Call AsyncTask to fetch user's first name
-        new FetchUserFirstNameTask().execute();
 
         // Set onClickListener for inventory_view
         inventory_view.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +103,6 @@ public class UserDashboard extends AppCompatActivity {
                 Intent intent = new Intent(UserDashboard.this, ViewInventoryItem.class);
                 intent.putExtra("UserID", userID);
                 startActivity(intent);
-
             }
         });
 
@@ -95,60 +119,19 @@ public class UserDashboard extends AppCompatActivity {
         scanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle button click
-                IntentIntegrator integrator = new IntentIntegrator(UserDashboard.this);
-                integrator.setPrompt("Scan QR Code");
-                integrator.setCameraId(0);  // Use a specific camera of the device
-                integrator.setOrientationLocked(true);
-                integrator.setBeepEnabled(true);
-                integrator.setCaptureActivity(CaptureActivityPortrait.class);
-                integrator.initiateScan();
+                scanQRCode();
             }
         });
     }
 
-    // AsyncTask to fetch user's first name from server
-    private class FetchUserFirstNameTask extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String firstName = "";
-
-            try {
-                // Construct URL for PHP script with parameters
-                URL url = new URL("http://" + ipAddress + "/getUserFirstName.php?userId=" + userId);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                // Read response from server
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-                inputStream.close();
-
-                // Parse JSON response
-                JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-                if (jsonObject.getBoolean("success")) {
-                    firstName = jsonObject.getString("FirstName");
-
-                }
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-
-            return firstName;
-        }
-
-        @Override
-        protected void onPostExecute(String firstName) {
-            // Update TextView with user's first name
-          //  userNamePlaceholder.setText(firstName);
-            Log.d("UserDashboard", "Fetched first name: " + firstName);
-
-        }
+    private void scanQRCode() {
+        IntentIntegrator integrator = new IntentIntegrator(UserDashboard.this);
+        integrator.setPrompt("Scan QR Code");
+        integrator.setCameraId(0);  // Use a specific camera of the device
+        integrator.setOrientationLocked(true);
+        integrator.setBeepEnabled(true);
+        integrator.setCaptureActivity(CaptureActivityPortrait.class);
+        integrator.initiateScan();
     }
 
     @Override
@@ -161,10 +144,35 @@ public class UserDashboard extends AppCompatActivity {
             } else {
                 Log.d("MainActivity", "Scanned");
                 String scannedResult = intentResult.getContents();
-                Toast.makeText(UserDashboard.this, "Scanned: " + scannedResult, Toast.LENGTH_LONG).show();
+                // Check if the scannedResult corresponds to a valid item
+                if (isValidItem(scannedResult)) {
+                    // Start the next activity and pass the scannedResult
+                    Intent intent = new Intent(UserDashboard.this, AfterScannedActivity.class);
+                    intent.putExtra("ScannedResult", scannedResult);
+                    intent.putExtra("UserID", userID);
+                    startActivity(intent);
+                } else {
+                    // Display a toast message indicating that the item doesn't exist
+                    Toast.makeText(UserDashboard.this, "Item not found", Toast.LENGTH_LONG).show();
+                    // Go back to UserDashboard
+                    finish();
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
+    // Method to check if the scanned result corresponds to a valid item
+    private boolean isValidItem(String scannedResult) {
+        // Perform the necessary validation here, such as checking the scanned result against your database
+        // For demonstration purposes, assume that scannedResult is valid if it's not empty
+        return scannedResult != null && !scannedResult.isEmpty();
+    }
+
+
+
+
+
 }

@@ -1,12 +1,17 @@
 package com.example.bisu_inventoryqrcode;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,6 +24,14 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
     RecyclerView recview;
     String userID;
 
+    ConstraintLayout back;
+
+    ImageView backArrow;
+
+    ProgressBar progressBar;
+
+    TextView prog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +40,33 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new LinearLayoutManager(this));
 
+        back = findViewById(R.id.back);
+        backArrow = findViewById(R.id.backArrow);
+
+        progressBar = findViewById(R.id.progressBar);
+        prog = findViewById(R.id.prog);
+
         userID = getIntent().getStringExtra("UserID");
 
         processdata();
+
+
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UserDashboard.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     public void processdata() {
+
+        progressBar.setVisibility(View.VISIBLE);
+        prog.setVisibility(View.VISIBLE);
         Call<List<responsemodel>> call = apicontroller
                 .getInstance()
                 .getapi()
@@ -50,11 +84,17 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
                         // Initialize adapter here
                         myadapter adapter = new myadapter(data, ViewInventoryItem.this);
                         recview.setAdapter(adapter);
+                        progressBar.setVisibility(View.GONE);
+                        prog.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(getApplicationContext(), "No data available", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        prog.setVisibility(View.GONE);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to fetch data", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    prog.setVisibility(View.GONE);
                 }
             }
 
@@ -63,6 +103,8 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
                 // Log the error
                 Log.e("API_ERROR", "Failed: " + t.getMessage(), t);
                 Toast.makeText(getApplicationContext(), "Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                prog.setVisibility(View.GONE);
             }
         });
     }

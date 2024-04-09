@@ -22,10 +22,14 @@ public class LoginActivity extends AppCompatActivity {
     Settings settings;
     String ipAddress="";//hjhj
 
+    private LoadingAlert loadingAlert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        loadingAlert = new LoadingAlert(this);
 
         IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
 
@@ -52,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             String Password = String.valueOf(passwordEditText.getText());
 
             if (!Email.equals("") && !Password.equals("")) {
+                loadingAlert.startAlertDialog();
                 Handler handler = new Handler();
                 handler.post(() -> {
                     String[] field = new String[2];
@@ -63,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     PutData putData = new PutData(ipAddress+ "/LoginRegister/login.php","POST", field, data);
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
+                            loadingAlert.closeAlertDialog();
                             String result = putData.getResult();
                             if (!result.startsWith("Error:")) {
                                 // Splitting the result string to extract UserID and FirstName
@@ -83,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             } else {
+                loadingAlert.closeAlertDialog();
                 Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
             }
         });

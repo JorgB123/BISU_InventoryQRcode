@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#EAE9E9"
     tools:context=".SignUp">
 
     <ImageView
@@ -350,6 +350,7 @@
         android:fontFamily="@font/montserrat_light"
         android:text="Already have an account?"
         android:textColor="@color/black"
+        android:layout_marginTop="40dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -363,6 +364,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_light"
+        android:layout_marginTop="40dp"
         android:text="Click Here"
         android:textColor="#028FFF"
         android:textSize="14sp"
