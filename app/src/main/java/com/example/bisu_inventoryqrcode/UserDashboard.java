@@ -85,6 +85,8 @@ public class UserDashboard extends AppCompatActivity {
         userID = getIntent().getStringExtra("UserID");
         fn = getIntent().getStringExtra("FirstName");
         userNamePlaceholder.setText(fn);
+        String cn = getIntent().getStringExtra("ConfirmStatus");
+        System.out.println("ConfirmStatus "+cn);
 
         more.setOnClickListener(new View.OnClickListener() {
             @Override

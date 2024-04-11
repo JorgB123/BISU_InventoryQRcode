@@ -71,17 +71,25 @@ public class LoginActivity extends AppCompatActivity {
                             loadingAlert.closeAlertDialog();
                             String result = putData.getResult();
                             if (!result.startsWith("Error:")) {
-                                // Splitting the result string to extract UserID and FirstName
+                                // Splitting the result string to extract UserID, FirstName, and ConfirmStatus
                                 String[] userData = result.split(",");
                                 String userID = userData[0]; // UserID
                                 String firstName = userData[1]; // FirstName
+                                String confirmStatus = userData[2]; // ConfirmStatus
 
-                                // Creating the Intent with UserID and FirstName extras
-                                Intent intent = new Intent(getApplicationContext(), UserDashboard.class);
-                                intent.putExtra("UserID", userID);
-                                intent.putExtra("FirstName", firstName);
-                                startActivity(intent);
-                                finish();
+                                // Check the confirmStatus value
+                                if (confirmStatus.equals("1")) {
+                                    // Creating the Intent with UserID and FirstName extras
+                                    Intent intent = new Intent(getApplicationContext(), UserDashboard.class);
+                                    intent.putExtra("UserID", userID);
+                                    intent.putExtra("FirstName", firstName);
+                                    startActivity(intent);
+                                    finish();
+                                    Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // Display a toast message indicating the user cannot proceed
+                                    Toast.makeText(getApplicationContext(), "Please wait for confirmation from the admin.", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                             }
@@ -93,5 +101,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

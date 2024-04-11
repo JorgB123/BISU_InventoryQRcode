@@ -82,9 +82,7 @@ public class ItemDetails extends AppCompatActivity {
         backtoReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ItemDetails.this, DetailActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -108,7 +106,7 @@ public class ItemDetails extends AppCompatActivity {
                 String dateAcquired = date.getText().toString();
                 String timeAcquired = time.getText().toString();
                 String itemQuantity = quantity.getText().toString();
-                String status = "Requesting"; // Get status data if available
+                int status = Integer.parseInt("1"); // Get status data if available
                 String purpose = purposeEditText.getText().toString();
                 String userID = borrowers_id.getText().toString();
                 String propertyId = propertyID.getText().toString();
@@ -121,13 +119,19 @@ public class ItemDetails extends AppCompatActivity {
                     return; // Exit the onClick method if any field is empty
                 }
 
+                if (Integer.parseInt(itemQuantity) > Integer.parseInt(stock.getText().toString())) {
+                    // Display a toast message indicating that the requested quantity exceeds the available stock
+                    Toast.makeText(ItemDetails.this, "Requested quantity exceeds available stock", Toast.LENGTH_SHORT).show();
+                    return; // Exit the onClick method if requested quantity exceeds available stock
+                }
+
                 Handler handler = new Handler();
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         // Prepare data for POST request
-                        String[] field = {"Date", "Time", "Quantity", "Status", "Purpose", "UserID", "PropertyID"};
-                        String[] data = {dateAcquired, timeAcquired, itemQuantity, status, purpose, userID, propertyId};
+                        String[] field = {"Date", "Time", "Quantity", "RequestStatus", "Purpose", "UserID", "PropertyID"};
+                        String[] data = {dateAcquired, timeAcquired, itemQuantity, String.valueOf(status), purpose, userID, propertyId};
 
                         // Perform POST request using PutData
                         PutData putData = new PutData(ipAddress + "/LoginRegister/request_item.php", "POST", field, data);

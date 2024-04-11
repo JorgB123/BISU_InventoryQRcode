@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,11 +21,22 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignUp extends AppCompatActivity {
 
@@ -35,6 +47,8 @@ public class SignUp extends AppCompatActivity {
     ImageButton settingsBtn;
     IPAddressManager ipAddressManager;
     String IPAddress;
+
+    String ipAddress="";
     Spinner departmentSpinner, roleSpinner;
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE = 1001;
@@ -42,12 +56,38 @@ public class SignUp extends AppCompatActivity {
 
     private LoadingAlert loadingAlert;
 
+    public class Department {
+        private String name;
+        private String id;
+
+        public Department(String name, String id) {
+            this.name = name;
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return name; // Display department name in spinner
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         loadingAlert = new LoadingAlert(this);
+
+        IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
+        ipAddress=ipAddressManager.getIPAddress();
 
 
         ipAddressManager = new IPAddressManager(this);
@@ -89,8 +129,10 @@ public class SignUp extends AppCompatActivity {
                 String Password = String.valueOf(passwordEditText.getText());
                 String FirstName = String.valueOf(firstNameEditText.getText());
                 String LastName = String.valueOf(lastNameEditText.getText());
-                String Department = departmentSpinner.getSelectedItem().toString();
+                Department selectedDepartment = (Department) departmentSpinner.getSelectedItem();
+                String Department = selectedDepartment.getId();
                 String Role = roleSpinner.getSelectedItem().toString();
+                String status = "0";
                 String ImagePath = imageField.getText().toString(); // Get the image file path from the EditText
 
                 Log.d("SignUp", "Email: " + Email);
@@ -122,8 +164,8 @@ public class SignUp extends AppCompatActivity {
                             }
 
                             // Prepare data for POST request
-                            String[] field = {"Email", "Password", "Firstname", "Lastname", "Department", "Role", "image"};
-                            String[] data = {Email, Password, FirstName, LastName, Department, Role, imageBytes != null ? Base64.encodeToString(imageBytes, Base64.DEFAULT) : ""};
+                            String[] field = {"Email", "Password", "Firstname", "Lastname", "DepartmentID", "Role", "ConfirmStatus", "image"};
+                            String[] data = {Email, Password, FirstName, LastName, Department, Role, status, imageBytes != null ? Base64.encodeToString(imageBytes, Base64.DEFAULT) : ""};
 
                             // Perform POST request using PutData
                             PutData putData = new PutData(IPAddress + "/LoginRegister/signup.php", "POST", field, data);
@@ -145,10 +187,12 @@ public class SignUp extends AppCompatActivity {
                     });
                 } else {
                     loadingAlert.closeAlertDialog();
-                    Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "All fields requireds", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        fetchDepartments();
     }
 
     // Method to pick an image from gallery or capture an image
@@ -186,4 +230,40 @@ public class SignUp extends AppCompatActivity {
             return null; // Return null if bitmap is null (error reading image)
         }
     }
+    // Method to fetch department choices using Volley
+    private void fetchDepartments() {
+        String url = ipAddress + "/LoginRegister/fetch_departments.php"; // Replace with the URL of your PHP script
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray departmentsArray = response.getJSONArray("departments");
+                            List<Department> departmentList = new ArrayList<>();
+                            for (int i = 0; i < departmentsArray.length(); i++) {
+                                JSONObject departmentObject = departmentsArray.getJSONObject(i);
+                                String departmentName = departmentObject.getString("name");
+                                String departmentId = departmentObject.getString("id");
+                                departmentList.add(new Department(departmentName, departmentId));
+                            }
+                            ArrayAdapter<Department> spinnerAdapter = new ArrayAdapter<>(SignUp.this, android.R.layout.simple_spinner_item, departmentList);
+                            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            departmentSpinner.setAdapter(spinnerAdapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle errors
+                        Toast.makeText(SignUp.this, "Error fetching departments: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
+    }
+
 }

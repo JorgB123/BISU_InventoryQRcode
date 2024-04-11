@@ -49,9 +49,7 @@ public class DetailActivity extends AppCompatActivity {
         backToRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, ViewInventoryItem.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -60,15 +58,23 @@ public class DetailActivity extends AppCompatActivity {
         req_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, ItemDetails.class);
-                intent.putExtra("UserID", userID);
-                intent.putExtra("PropertyNumber", propertyNumber);
-                intent.putExtra("PropertyID", propertyID);
-                intent.putExtra("Description", description);
-                intent.putExtra("StockAvailable", stockAvailable);
-                startActivity(intent);
+                // Check if stockAvailable is equal to 0
+                if (stockAvailable.equals("0")) {
+                    // Display a toast message indicating the item is out of stock
+                    Toast.makeText(DetailActivity.this, "Item is out of stock", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Proceed to the ItemDetails activity
+                    Intent intent = new Intent(DetailActivity.this, ItemDetails.class);
+                    intent.putExtra("UserID", userID);
+                    intent.putExtra("PropertyNumber", propertyNumber);
+                    intent.putExtra("PropertyID", propertyID);
+                    intent.putExtra("Description", description);
+                    intent.putExtra("StockAvailable", stockAvailable);
+                    startActivity(intent);
+                }
             }
         });
+
 
         // Set onClickListener for report_btn
         report_btn.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +132,7 @@ public class DetailActivity extends AppCompatActivity {
             descrip.setText(description);
             stock.setText(stockAvailable);
             // Load image using Glide
-            Glide.with(this).load("http://192.168.1.11/LoginRegister/item_images/" + image).into(imageView);
+            Glide.with(this).load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + image).into(imageView);
         }
     }
 

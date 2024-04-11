@@ -202,7 +202,6 @@
                             android:paddingTop="10dp"
                             android:paddingEnd="10dp"
                             android:paddingBottom="5dp"
-                            android:entries="@array/department"
                             android:hint="Select Department"
                             android:popupBackground="#FFFFFF" />
 

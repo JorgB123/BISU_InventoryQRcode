@@ -219,7 +219,7 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/report_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="60dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/orange_button"
                         android:text="Report"

@@ -55,8 +55,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UserDashboard.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 
