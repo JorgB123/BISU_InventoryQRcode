@@ -14,12 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -55,6 +57,8 @@ public class SignUp extends AppCompatActivity {
     private Uri imageUri;
 
     private LoadingAlert loadingAlert;
+    private ScrollView scrollView;
+    private ConstraintLayout rootLayout;
 
     public class Department {
         private String name;
@@ -88,6 +92,9 @@ public class SignUp extends AppCompatActivity {
 
         IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
         ipAddress=ipAddressManager.getIPAddress();
+
+        scrollView = findViewById(R.id.scrollView);
+        rootLayout = findViewById(R.id.rootLayout);
 
 
         ipAddressManager = new IPAddressManager(this);
@@ -143,6 +150,28 @@ public class SignUp extends AppCompatActivity {
                 Log.d("SignUp", "Role: " + Role);
                 Log.d("SignUp", "ImagePath: " + ImagePath);
 
+                if (!isValidEmail(Email)) {
+                    loadingAlert.closeAlertDialogWithDelay(200);
+                    usernameEditText.setBackgroundResource(R.drawable.edittext_error_background);
+                    Toast.makeText(getApplicationContext(), "Invalid email format", Toast.LENGTH_SHORT).show();
+                    scrollToView(usernameEditText);
+                    return;
+                }else {
+                    // Clear the red background color
+                    usernameEditText.setBackgroundResource(R.drawable.edittext);
+                }
+
+                if (Password.length() < 8 || Password.length() > 16) {
+                    loadingAlert.closeAlertDialogWithDelay(200);
+                    passwordEditText.setBackgroundResource(R.drawable.edittext_error_background);
+                    Toast.makeText(getApplicationContext(), "Password must be between 8 and 16 characters", Toast.LENGTH_SHORT).show();
+                    scrollToView(passwordEditText);
+                    return;
+                }else {
+                    // Clear the red background color
+                    passwordEditText.setBackgroundResource(R.drawable.edittext);
+                }
+
 
                 if (!Email.isEmpty() && !Password.isEmpty() && !FirstName.isEmpty() && !LastName.isEmpty() && !Department.isEmpty() && !Role.isEmpty()) {
                     Handler handler = new Handler();
@@ -171,7 +200,7 @@ public class SignUp extends AppCompatActivity {
                             PutData putData = new PutData(IPAddress + "/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
-                                    loadingAlert.closeAlertDialog();
+                                    loadingAlert.closeAlertDialogWithDelay(500);
                                     String result = putData.getResult();
                                     if (result.equals("Sign Up Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
@@ -179,6 +208,7 @@ public class SignUp extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     } else {
+                                        loadingAlert.closeAlertDialogWithDelay(200);
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -186,8 +216,8 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
                 } else {
-                    loadingAlert.closeAlertDialog();
-                    Toast.makeText(getApplicationContext(), "All fields requireds", Toast.LENGTH_SHORT).show();
+                    loadingAlert.closeAlertDialogWithDelay(200);
+                    Toast.makeText(getApplicationContext(), "All fields required", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -265,5 +295,19 @@ public class SignUp extends AppCompatActivity {
 
         Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
+    private boolean isValidEmail(String email) {
+        String emailPattern = "[a-zA-Z0-9._-]+@bisu\\.edu\\.ph";
+        return email.matches(emailPattern);
+    }
+    private void scrollToView(final View view) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                int scrollTo = view.getTop() - scrollView.getPaddingTop();
+                scrollView.smoothScrollTo(0, scrollTo);
+            }
+        });
+    }
+
 
 }

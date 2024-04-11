@@ -1,6 +1,7 @@
 package com.example.bisu_inventoryqrcode;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +40,8 @@ public class MyReport extends AppCompatActivity {
 
     List<ReportItems> reportItemList;
 
+    ConstraintLayout back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,16 @@ public class MyReport extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar); // Initialize progressBar
         prog = findViewById(R.id.prog);
 
+        back=findViewById(R.id.back);
+
         fetchReportItems(userID);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void fetchReportItems(String userID) {

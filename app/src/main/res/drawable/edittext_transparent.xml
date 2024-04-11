@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#00FFFFFF" /> <!-- Transparent color -->
+    <corners android:radius="26dp" /> <!-- Match radius with the second shape -->/> <!-- Red border color -->
+</shape>

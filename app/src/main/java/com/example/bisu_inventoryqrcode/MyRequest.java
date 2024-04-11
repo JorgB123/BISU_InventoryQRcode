@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,7 @@ public class MyRequest extends AppCompatActivity {
     ProgressBar progressBar;
 
     TextView prog;
+    ConstraintLayout back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,16 @@ public class MyRequest extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         prog = findViewById(R.id.prog);
 
+        back=findViewById(R.id.back);
+
         fetchRequestItems(userID);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void fetchRequestItems(String userID) {

@@ -46,7 +46,7 @@
 
     <string-array name="role">
         <item>Faculty</item>
-        <item>Student</item>
+
 
         <!-- Add more source fund options as needed -->
     </string-array>
