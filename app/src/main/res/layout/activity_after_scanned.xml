@@ -4,8 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EAE9E9"
+    android:background="#FFFFFF"
     tools:context=".AfterScannedActivity">
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/req_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/green_button"
+            android:text="Request"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/report_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/orange_button"
+            android:text="Report"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -187,44 +215,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_weight="1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linear2" />
-
-                <LinearLayout
-                    android:id="@+id/buttonsContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view2">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/req_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/green_button"
-                        android:text="Request"
-                        android:textColor="@color/white" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/report_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/orange_button"
-                        android:text="Report"
-                        android:textColor="@color/white" />
-                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

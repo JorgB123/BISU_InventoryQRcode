@@ -74,7 +74,7 @@ public class MyReport extends AppCompatActivity {
     }
 
     private void fetchReportItems(String userID) {
-        String url = "http://192.168.1.11/LoginRegister/getReportedItems.php?UserID=" + userID;
+        String url = "http://192.168.137.141/LoginRegister/getReportedItems.php?UserID=" + userID;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,

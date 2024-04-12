@@ -56,7 +56,7 @@ public class AfterScannedActivity extends AppCompatActivity {
 
 
         // Make an HTTP request to fetch the item name, image URL, and StockAvailable from the PHP script
-        String url = "http://192.168.1.11/LoginRegister/getInventoryItemInfo.php?PropertyNumber=" + scannedResult;
+        String url = "http://192.168.137.141/LoginRegister/getInventoryItemInfo.php?PropertyNumber=" + scannedResult;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -83,7 +83,7 @@ public class AfterScannedActivity extends AppCompatActivity {
                                 stockAvailableTextView.setText(stockAvailable);
                                 // Load and display the image using Glide with the base URL
                                 Glide.with(AfterScannedActivity.this)
-                                        .load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + imageURL)
+                                        .load("http://192.168.137.141/BISU_SupplyManagementQRCode/uploads/pictures/" + imageURL)
                                         .into(itemImageView);
                             } else {
                                 // Display an error message if item name, image URL, or StockAvailable not found
@@ -110,78 +110,78 @@ public class AfterScannedActivity extends AppCompatActivity {
         // Add the request to the request queue
         requestQueue.add(jsonObjectRequest);
 
-// Set up the OnClickListener for the report button
-//        report_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Create a LayoutInflater instance
-//                LayoutInflater inflater = LayoutInflater.from(AfterScannedActivity.this);
-//
-//                // Inflate the custom layout for the reason input
-//                View reasonView = inflater.inflate(R.layout.reason_input_dialog, null);
-//
-//                // Find the EditText in the custom layout
-//                EditText reasonEditText = reasonView.findViewById(R.id.reason_edit_text);
-//
-//                // Create and show the AlertDialog with custom layout
-//                AlertDialog.Builder builder = new AlertDialog.Builder(AfterScannedActivity.this);
-//                builder.setTitle("Report Item");
-//                builder.setView(reasonView); // Set the custom layout containing the reason input EditText
-//                builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // Retrieve the reason entered by the user
-//                        String details = reasonEditText.getText().toString();
-//
-//                        // Create and show the confirmation dialog
-//                        AlertDialog.Builder confirmationBuilder = new AlertDialog.Builder(AfterScannedActivity.this);
-//                        confirmationBuilder.setTitle("Confirmation");
-//                        confirmationBuilder.setMessage("Are you sure you want to report the item '" + itemNameTextView.getText() + "'?");
-//                        confirmationBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                reportItem(details);
-//                            }
-//                        });
-//                        confirmationBuilder.setNegativeButton("No", null);
-//                        confirmationBuilder.show(); // Show the confirmation dialog
-//                    }
-//                });
-//                builder.setNegativeButton("Cancel", null);
-//                builder.show(); // Show the AlertDialog with custom layout
-//            }
-//        });
-//
-//    }
-//    private void reportItem(String details) {
-//        // Prepare data for POST request
-//        String[] field = {"ReportedDate", "Details", "UserID", "PropertyID"};
-//        String[] data = {getCurrentDateTime(), details, userID, propertyID};
-//
-//        // Perform POST request using PutData
-//        PutData putData = new PutData(ipAddress + "/LoginRegister/report_item.php", "POST", field, data);
-//        if (putData.startPut()) {
-//            if (putData.onComplete()) {
-//                String result = putData.getResult();
-//                try {
-//                    JSONObject jsonObject = new JSONObject(result);
-//                    boolean success = jsonObject.getBoolean("success");
-//                    String message = jsonObject.getString("message");
-//                    Toast.makeText(AfterScannedActivity.this, message, Toast.LENGTH_SHORT).show();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(AfterScannedActivity.this, "Error parsing response", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        } else {
-//            Toast.makeText(AfterScannedActivity.this, "Error sending request", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    // Method to get current date and time
-//    private String getCurrentDateTime() {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-//        return sdf.format(new Date());
-//    }
+
+        report_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a LayoutInflater instance
+                LayoutInflater inflater = LayoutInflater.from(AfterScannedActivity.this);
+
+                // Inflate the custom layout for the reason input
+                View reasonView = inflater.inflate(R.layout.reason_input_dialog, null);
+
+                // Find the EditText in the custom layout
+                EditText reasonEditText = reasonView.findViewById(R.id.reason_edit_text);
+
+                // Create and show the AlertDialog with custom layout
+                AlertDialog.Builder builder = new AlertDialog.Builder(AfterScannedActivity.this);
+                builder.setTitle("Report Item");
+                builder.setView(reasonView); // Set the custom layout containing the reason input EditText
+                builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Retrieve the reason entered by the user
+                        String details = reasonEditText.getText().toString();
+
+                        // Create and show the confirmation dialog
+                        AlertDialog.Builder confirmationBuilder = new AlertDialog.Builder(AfterScannedActivity.this);
+                        confirmationBuilder.setTitle("Confirmation");
+                        confirmationBuilder.setMessage("Are you sure you want to report the item '" + itemNameTextView.getText() + "'?");
+                        confirmationBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                reportItem(details);
+                            }
+                        });
+                        confirmationBuilder.setNegativeButton("No", null);
+                        confirmationBuilder.show(); // Show the confirmation dialog
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+                builder.show(); // Show the AlertDialog with custom layout
+            }
+        });
+
+    }
+    private void reportItem(String details) {
+        // Prepare data for POST request
+        String[] field = {"ReportedDate", "Details", "UserID", "PropertyID"};
+        String[] data = {getCurrentDateTime(), details, userID, propertyID};
+
+        // Perform POST request using PutData
+        PutData putData = new PutData(ipAddress + "/LoginRegister/report_item.php", "POST", field, data);
+        if (putData.startPut()) {
+            if (putData.onComplete()) {
+                String result = putData.getResult();
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    boolean success = jsonObject.getBoolean("success");
+                    String message = jsonObject.getString("message");
+                    Toast.makeText(AfterScannedActivity.this, message, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(AfterScannedActivity.this, "Error parsing response", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            Toast.makeText(AfterScannedActivity.this, "Error sending request", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Method to get current date and time
+    private String getCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
+    }
 }
-}
+

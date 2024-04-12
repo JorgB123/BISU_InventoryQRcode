@@ -132,7 +132,7 @@ public class DetailActivity extends AppCompatActivity {
             descrip.setText(description);
             stock.setText(stockAvailable);
             // Load image using Glide
-            Glide.with(this).load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + image).into(imageView);
+            Glide.with(this).load("http://192.168.137.141/BISU_SupplyManagementQRCode/uploads/pictures/" + image).into(imageView);
         }
     }
 

@@ -54,7 +54,7 @@ public class MyRequest extends AppCompatActivity {
 
         recview = findViewById(R.id.recview);
         requestItemList = new ArrayList<RequestItems>();
-        adapter = new RequestItemAdapter(this, requestItemList);
+        adapter = new RequestItemAdapter(this, requestItemList, userID);
         recview.setAdapter(adapter);
         recview.setLayoutManager(new LinearLayoutManager(this));
 
@@ -74,7 +74,7 @@ public class MyRequest extends AppCompatActivity {
     }
 
     private void fetchRequestItems(String userID) {
-        String url = "http://192.168.1.11/LoginRegister/getRequestedItems.php?UserID=" + userID;
+        String url = "http://192.168.137.141/LoginRegister/getRequestedItems.php?UserID=" + userID;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
@@ -88,9 +88,11 @@ public class MyRequest extends AppCompatActivity {
                             prog.setVisibility(View.GONE);
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
+                                String requestItemID = jsonObject.getString("RequestItemID"); // Fetch RequestItemID
                                 String propertyID = jsonObject.getString("property_name");
                                 String quantity = jsonObject.getString("Quantity");
-                                RequestItems requestItem = new RequestItems(propertyID, quantity);
+                                String requestStatus = jsonObject.getString("RequestStatus");
+                                RequestItems requestItem = new RequestItems(requestItemID, propertyID, quantity, requestStatus); // Pass RequestItemID to RequestItems constructor
                                 requestItemList.add(requestItem);
 
                             }
