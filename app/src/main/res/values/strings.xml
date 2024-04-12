@@ -42,7 +42,7 @@
     </string-array>
 
 
-        <!-- Add more source fund options as needed -->
+    <!-- Add more source fund options as needed -->
 
     <string-array name="role">
         <item>Faculty</item>

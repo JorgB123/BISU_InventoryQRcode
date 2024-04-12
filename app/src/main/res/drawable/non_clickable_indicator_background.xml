@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Set the background color to indicate not clickability -->
+    <solid android:color="#9E9E9E"/> <!-- Grey color -->
+    <!-- Optionally, you can add corner radius to make it rounded -->
+    <corners android:radius="8dp"/>
+</shape>

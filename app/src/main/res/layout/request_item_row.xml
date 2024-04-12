@@ -28,10 +28,10 @@
             android:id="@+id/property_id_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="78dp"
+            android:layout_marginStart="79dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Property ID:"
+            android:text="1:"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/name_text_view"
@@ -41,23 +41,58 @@
             android:id="@+id/quantity_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="16dp"
-            android:text="Name:"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:text="2:"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/name" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/name_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/property_id_text_view" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
             android:text="Quantity:"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/property_id_text_view" />
+
+        <!-- New TextView for Status -->
+        <TextView
+            android:id="@+id/status_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="3:"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/quantity"
+            app:layout_constraintTop_toBottomOf="@+id/quantity" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Status:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/quantity" />
+
+        <!-- Indicator View -->
+        <View
+            android:id="@+id/indicator_view"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/clickable_indicator_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
