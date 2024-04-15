@@ -1,5 +1,6 @@
 package com.example.bisu_inventoryqrcode;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
 
         public void bind(final responsemodel item, final OnItemClickListener listener) {
             t1.setText(item.getDescription());
+            Log.d("StockAvailable", "Value received: " + item.getStockAvailable());
             if (item.getStockAvailable() != null && !item.getStockAvailable().isEmpty()) {
                 t2.setText(item.getStockAvailable());
             } else {

@@ -241,7 +241,7 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/edittext"
                     android:ems="10"
-                    android:inputType="text|number"
+                    android:inputType="text"
                     android:hint="Purpose"
                     android:paddingStart="30dp"/>
 

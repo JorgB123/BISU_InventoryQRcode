@@ -2,6 +2,7 @@ package com.example.bisu_inventoryqrcode;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -155,15 +156,21 @@ public class ItemDetails extends AppCompatActivity {
                                         AlertDialog.Builder successDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
                                         successDialogBuilder.setTitle("Success");
                                         successDialogBuilder.setMessage(message);
-                                        successDialogBuilder.setPositiveButton("OK", null);
-                                        AlertDialog successDialog = successDialogBuilder.create();
-                                        successDialog.show();
+                                        successDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // Clear input fields
+                                                date.getText().clear();
+                                                time.getText().clear();
+                                                quantity.getText().clear();
+                                                purposeEditText.getText().clear();
 
-                                        // Clear input fields
-                                        date.getText().clear();
-                                        time.getText().clear();
-                                        quantity.getText().clear();
-                                        purposeEditText.getText().clear();
+                                                // Navigate back
+                                                onBackPressed();
+                                            }
+                                        });
+                                        AlertDialog successDialog = successDialogBuilder.create();
+                                        successDialog.show(); // Show the dialog
                                     } else {
                                         // Display an AlertDialog indicating an error message
                                         AlertDialog.Builder errorDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
@@ -173,6 +180,7 @@ public class ItemDetails extends AppCompatActivity {
                                         AlertDialog errorDialog = errorDialogBuilder.create();
                                         errorDialog.show();
                                     }
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     // Display an AlertDialog indicating an error parsing response

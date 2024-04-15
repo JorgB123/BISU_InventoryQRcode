@@ -47,6 +47,8 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         prog = findViewById(R.id.prog);
 
         userID = getIntent().getStringExtra("UserID");
+        boolean isFundAdministrator = getIntent().getBooleanExtra("IsFundAdministrator", false);
+        System.out.println("IsFundAdministratorinInventory: " + isFundAdministrator);
 
         processdata();
 
@@ -63,13 +65,27 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
     }
 
     public void processdata() {
-
         progressBar.setVisibility(View.VISIBLE);
         prog.setVisibility(View.VISIBLE);
-        Call<List<responsemodel>> call = apicontroller
-                .getInstance()
-                .getapi()
-                .getdata();
+
+        Call<List<responsemodel>> call;
+
+        // Check if the user is a fund administrator
+        boolean isFundAdministrator = getIntent().getBooleanExtra("IsFundAdministrator", false);
+
+        // If the user is a fund administrator, fetch all data
+        if (isFundAdministrator) {
+            call = apicontroller
+                    .getInstance()
+                    .getapi()
+                    .getdata();
+        } else {
+            // If the user is not a fund administrator, fetch only serviceable items
+            call = apicontroller
+                    .getInstance()
+                    .getapi()
+                    .getServiceableData();
+        }
 
         call.enqueue(new Callback<List<responsemodel>>() {
             @Override
@@ -107,6 +123,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
             }
         });
     }
+
 
     @Override
     public void onItemClick(responsemodel item) {

@@ -1,5 +1,6 @@
 package com.example.bisu_inventoryqrcode;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -93,8 +94,8 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                     @Override
                     public void onClick(View view) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                        alertDialogBuilder.setTitle("Transfer Item");
-                        alertDialogBuilder.setMessage("Are you sure you want to transfer this item?");
+                        alertDialogBuilder.setTitle("Return Item");
+                        alertDialogBuilder.setMessage("Are you sure you want to return this item?");
                         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -165,7 +166,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
             return sdf.format(new Date());
         }
 
-        private void deleteRequestItem(String requestItemID) {
+        private void deleteRequestItem(final String requestItemID) {
             // Prepare data for POST request to delete the item from requestitems table
             String[] deleteField = {"RequestItemID"};
             String[] deleteData = {requestItemID};
@@ -180,7 +181,24 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                         JSONObject deleteJsonObject = new JSONObject(deleteResult);
                         boolean deleteSuccess = deleteJsonObject.getBoolean("success");
                         String deleteMessage = deleteJsonObject.getString("message");
-                        Toast.makeText(context, deleteMessage, Toast.LENGTH_SHORT).show();
+                        if (deleteSuccess) {
+                            // If deletion was successful, show AlertDialog
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                            alertDialogBuilder.setTitle("Success");
+                            alertDialogBuilder.setMessage(deleteMessage);
+                            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    // Navigate back
+                                    ((Activity) context).onBackPressed();
+                                }
+                            });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        } else {
+                            // If deletion was not successful, show Toast
+                            Toast.makeText(context, deleteMessage, Toast.LENGTH_SHORT).show();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(context, "Error parsing response", Toast.LENGTH_SHORT).show();
@@ -190,5 +208,6 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                 Toast.makeText(context, "Error sending delete request", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 }

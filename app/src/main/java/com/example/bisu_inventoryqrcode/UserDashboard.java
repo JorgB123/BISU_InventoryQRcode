@@ -46,7 +46,7 @@ package com.example.bisu_inventoryqrcode;
 public class UserDashboard extends AppCompatActivity {
 
     EditText search;
-    ImageView inventory_view, request_item, borrowed_item, scanner, settings_user, more;
+    ImageView inventory_view, request_item, borrowed_item, scanner, settings_user, more, returned;
     TextView userNamePlaceholder;
     String ipAddress = ""; //hjhj
     String userId = "";
@@ -80,6 +80,7 @@ public class UserDashboard extends AppCompatActivity {
         request_item = findViewById(R.id.request_item);
         inventory_view = findViewById(R.id.inventory_view);
         settings_user = findViewById(R.id.settings_user);
+        returned = findViewById(R.id.returned);
         more = findViewById(R.id.more);
 
         userID = getIntent().getStringExtra("UserID");
@@ -87,6 +88,18 @@ public class UserDashboard extends AppCompatActivity {
         userNamePlaceholder.setText(fn);
         String cn = getIntent().getStringExtra("ConfirmStatus");
         System.out.println("ConfirmStatus "+cn);
+
+        boolean isFundAdministrator = getIntent().getBooleanExtra("IsFundAdministrator", false);
+        System.out.println("IsFundAdministrator: " + isFundAdministrator);
+
+        returned.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDashboard.this, ReturnedItems.class);
+                intent.putExtra("UserID", userID);
+                startActivity(intent);
+            }
+        });
 
 
         borrowed_item.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +136,7 @@ public class UserDashboard extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(UserDashboard.this, ViewInventoryItem.class);
                 intent.putExtra("UserID", userID);
+                intent.putExtra("IsFundAdministrator", isFundAdministrator);
                 startActivity(intent);
             }
         });

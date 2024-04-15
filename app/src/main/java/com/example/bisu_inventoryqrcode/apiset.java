@@ -10,4 +10,7 @@ public interface apiset
     @GET("fetcher.php")
     Call<List<responsemodel>> getdata();
 
+    @GET("serviceable_fetcher.php")
+    Call<List<responsemodel>> getServiceableData();
+
 }
