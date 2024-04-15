@@ -60,8 +60,13 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Check if stockAvailable is equal to 0
                 if (stockAvailable.equals("0")) {
-                    // Display a toast message indicating the item is out of stock
-                    Toast.makeText(DetailActivity.this, "Item is out of stock", Toast.LENGTH_SHORT).show();
+                    // Display an AlertDialog indicating the item is out of stock
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DetailActivity.this);
+                    alertDialogBuilder.setTitle("Out of Stock");
+                    alertDialogBuilder.setMessage("This item is currently out of stock.");
+                    alertDialogBuilder.setPositiveButton("OK", null);
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 } else {
                     // Proceed to the ItemDetails activity
                     Intent intent = new Intent(DetailActivity.this, ItemDetails.class);
@@ -74,6 +79,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
         // Set onClickListener for report_btn
@@ -132,7 +138,7 @@ public class DetailActivity extends AppCompatActivity {
             descrip.setText(description);
             stock.setText(stockAvailable);
             // Load image using Glide
-            Glide.with(this).load("http://192.168.137.141/BISU_SupplyManagementQRCode/uploads/pictures/" + image).into(imageView);
+            Glide.with(this).load(ipAddress + "/BISU_SupplyManagementQRCode/uploads/pictures/" + image).into(imageView);
         }
     }
 

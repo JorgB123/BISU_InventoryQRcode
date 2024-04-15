@@ -67,4 +67,13 @@
         android:layout_below="@id/user_id_label"
         android:layout_marginTop="8dp"/>
 
+    <Button
+        android:id="@+id/transfer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_id_text_view"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/black"
+        android:text="Transfer" />
+
 </RelativeLayout>

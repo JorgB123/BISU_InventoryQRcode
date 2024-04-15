@@ -46,7 +46,7 @@ package com.example.bisu_inventoryqrcode;
 public class UserDashboard extends AppCompatActivity {
 
     EditText search;
-    ImageView inventory_view, request_item, report_damage, scanner, settings_user, more;
+    ImageView inventory_view, request_item, borrowed_item, scanner, settings_user, more;
     TextView userNamePlaceholder;
     String ipAddress = ""; //hjhj
     String userId = "";
@@ -76,7 +76,7 @@ public class UserDashboard extends AppCompatActivity {
 
         // Initialize ImageViews
         scanner = findViewById(R.id.scanner);
-        report_damage = findViewById(R.id.report_damage);
+        borrowed_item = findViewById(R.id.report_damage);
         request_item = findViewById(R.id.request_item);
         inventory_view = findViewById(R.id.inventory_view);
         settings_user = findViewById(R.id.settings_user);
@@ -88,14 +88,33 @@ public class UserDashboard extends AppCompatActivity {
         String cn = getIntent().getStringExtra("ConfirmStatus");
         System.out.println("ConfirmStatus "+cn);
 
-        more.setOnClickListener(new View.OnClickListener() {
+
+        borrowed_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDashboard.this, ReqReport.class);
+                Intent intent = new Intent(UserDashboard.this, BorrowedItems.class);
                 intent.putExtra("UserID", userID);
                 startActivity(intent);
             }
         });
+
+        request_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDashboard.this, MyRequest.class);
+                intent.putExtra("UserID", userID);
+                startActivity(intent);
+            }
+        });
+
+//        more.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(UserDashboard.this, ReqReport.class);
+//                intent.putExtra("UserID", userID);
+//                startActivity(intent);
+//            }
+//        });
 
 
         // Set onClickListener for inventory_view

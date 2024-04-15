@@ -74,7 +74,7 @@ public class MyRequest extends AppCompatActivity {
     }
 
     private void fetchRequestItems(String userID) {
-        String url = "http://192.168.137.141/LoginRegister/getRequestedItems.php?UserID=" + userID;
+        String url = ipAddress + "/LoginRegister/getRequestedItems.php?UserID=" + userID;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
@@ -88,13 +88,17 @@ public class MyRequest extends AppCompatActivity {
                             prog.setVisibility(View.GONE);
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String requestItemID = jsonObject.getString("RequestItemID"); // Fetch RequestItemID
-                                String propertyID = jsonObject.getString("property_name");
+                                String propertyName = jsonObject.getString("property_name");
+                                String requestItemID = jsonObject.getString("RequestItemID");
                                 String quantity = jsonObject.getString("Quantity");
                                 String requestStatus = jsonObject.getString("RequestStatus");
-                                RequestItems requestItem = new RequestItems(requestItemID, propertyID, quantity, requestStatus); // Pass RequestItemID to RequestItems constructor
-                                requestItemList.add(requestItem);
+                                String propertyID = jsonObject.getString("PropertyID");
 
+                                // Only add items with request status "1" (Requesting)
+                                if (requestStatus.equals("1")) {
+                                    RequestItems requestItem = new RequestItems(propertyName, requestItemID, quantity, requestStatus, propertyID);
+                                    requestItemList.add(requestItem);
+                                }
                             }
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
@@ -118,4 +122,5 @@ public class MyRequest extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
+
 }

@@ -1,18 +1,29 @@
 package com.example.bisu_inventoryqrcode;
 
 public class RequestItems {
+    private  String propertyName;
     private String propertyID;
     private String requestItemID;
 
     private String quantity;
     private String requestStatus;
 
-    public RequestItems(String propertyID, String requestItemID, String quantity, String requestStatus) {
+    public RequestItems(String propertyID, String requestItemID, String quantity, String requestStatus, String propertyName) {
         this.propertyID = propertyID;
         this.requestItemID = requestItemID;
         this.quantity = quantity;
         this.requestStatus = requestStatus;
+        this.propertyName = propertyName;
 
+
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
     public String getRequestItemID() {

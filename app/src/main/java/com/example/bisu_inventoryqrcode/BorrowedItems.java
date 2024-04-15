@@ -1,9 +1,6 @@
 package com.example.bisu_inventoryqrcode;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+// Inside MyRequest activity
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +8,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,44 +28,42 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyReport extends AppCompatActivity {
+public class BorrowedItems extends AppCompatActivity {
 
     String userID;
-
     String ipAddress = "";
+    RecyclerView recview;
+    RequestItemAdapter adapter;
+    List<RequestItems> requestItemList;
 
     ProgressBar progressBar;
+
     TextView prog;
-    RecyclerView recview;
-
-    ReportItemAdapter adapter;
-
-    List<ReportItems> reportItemList;
-
     ConstraintLayout back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_report);
+        setContentView(R.layout.activity_borrowed_items);
 
         IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
         ipAddress = ipAddressManager.getIPAddress();
 
         userID = getIntent().getStringExtra("UserID");
+        System.out.println("scatter"+userID);
 
         recview = findViewById(R.id.recview);
-        reportItemList = new ArrayList<ReportItems>();
-        adapter = new ReportItemAdapter(this, reportItemList);
+        requestItemList = new ArrayList<RequestItems>();
+        adapter = new RequestItemAdapter(this, requestItemList, userID);
         recview.setAdapter(adapter);
         recview.setLayoutManager(new LinearLayoutManager(this));
 
-        progressBar = findViewById(R.id.progressBar); // Initialize progressBar
+        progressBar = findViewById(R.id.progressBar);
         prog = findViewById(R.id.prog);
 
         back=findViewById(R.id.back);
 
-        fetchReportItems(userID);
+        fetchRequestItems(userID);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,8 +73,8 @@ public class MyReport extends AppCompatActivity {
         });
     }
 
-    private void fetchReportItems(String userID) {
-        String url = ipAddress + "/LoginRegister/getReportedItems.php?UserID=" + userID;
+    private void fetchRequestItems(String userID) {
+        String url = ipAddress + "/LoginRegister/getRequestedItems.php?UserID=" + userID;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
@@ -88,17 +88,23 @@ public class MyReport extends AppCompatActivity {
                             prog.setVisibility(View.GONE);
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String propertyID = jsonObject.getString("property_name");
-                                String details = jsonObject.getString("Details");
-                                ReportItems reportItems = new ReportItems(propertyID, details);
-                                reportItemList.add(reportItems);
+                                String propertyName = jsonObject.getString("property_name");
+                                String requestItemID = jsonObject.getString("RequestItemID");
+                                String quantity = jsonObject.getString("Quantity");
+                                String requestStatus = jsonObject.getString("RequestStatus");
+                                String propertyID = jsonObject.getString("PropertyID");
 
+                                // Only add items with request status "1" (Requesting)
+                                if (requestStatus.equals("2")) {
+                                    RequestItems requestItem = new RequestItems(propertyName, requestItemID, quantity, requestStatus, propertyID);
+                                    requestItemList.add(requestItem);
+                                }
                             }
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MyReport.this, "Error parsing response", Toast.LENGTH_SHORT).show();
-                            Log.e("MyReport", "Error parsing response: " + e.toString());
+                            Toast.makeText(BorrowedItems.this, "Error parsing response", Toast.LENGTH_SHORT).show();
+                            Log.e("MyRequest", "Error parsing response: " + e.toString());
                         }
                     }
                 },
@@ -107,8 +113,8 @@ public class MyReport extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressBar.setVisibility(View.GONE);
                         prog.setVisibility(View.GONE);
-                        Toast.makeText(MyReport.this, "Error fetching data", Toast.LENGTH_SHORT).show();
-                        Log.e("MyReport", "Error fetching data: " + error.toString());
+                        Toast.makeText(BorrowedItems.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+                        Log.e("MyRequest", "Error fetching data: " + error.toString());
                     }
                 }
         );
@@ -116,4 +122,5 @@ public class MyReport extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
+
 }

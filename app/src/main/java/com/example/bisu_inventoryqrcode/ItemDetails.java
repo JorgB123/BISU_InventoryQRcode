@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -119,9 +120,15 @@ public class ItemDetails extends AppCompatActivity {
                     return; // Exit the onClick method if any field is empty
                 }
 
+                // Inside onClick of request_button
                 if (Integer.parseInt(itemQuantity) > Integer.parseInt(stock.getText().toString())) {
-                    // Display a toast message indicating that the requested quantity exceeds the available stock
-                    Toast.makeText(ItemDetails.this, "Requested quantity exceeds available stock", Toast.LENGTH_SHORT).show();
+                    // Display an AlertDialog indicating that the requested quantity exceeds the available stock
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
+                    alertDialogBuilder.setTitle("Error");
+                    alertDialogBuilder.setMessage("Requested quantity exceeds available stock");
+                    alertDialogBuilder.setPositiveButton("OK", null);
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                     return; // Exit the onClick method if requested quantity exceeds available stock
                 }
 
@@ -144,24 +151,51 @@ public class ItemDetails extends AppCompatActivity {
                                     boolean success = jsonObject.getBoolean("success");
                                     String message = jsonObject.getString("message");
                                     if (success) {
-                                        Toast.makeText(ItemDetails.this, message, Toast.LENGTH_SHORT).show();
+                                        // Display an AlertDialog indicating that the request was successful
+                                        AlertDialog.Builder successDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
+                                        successDialogBuilder.setTitle("Success");
+                                        successDialogBuilder.setMessage(message);
+                                        successDialogBuilder.setPositiveButton("OK", null);
+                                        AlertDialog successDialog = successDialogBuilder.create();
+                                        successDialog.show();
+
+                                        // Clear input fields
                                         date.getText().clear();
                                         time.getText().clear();
                                         quantity.getText().clear();
                                         purposeEditText.getText().clear();
                                     } else {
-                                        Toast.makeText(ItemDetails.this, message, Toast.LENGTH_SHORT).show();
+                                        // Display an AlertDialog indicating an error message
+                                        AlertDialog.Builder errorDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
+                                        errorDialogBuilder.setTitle("Error");
+                                        errorDialogBuilder.setMessage(message);
+                                        errorDialogBuilder.setPositiveButton("OK", null);
+                                        AlertDialog errorDialog = errorDialogBuilder.create();
+                                        errorDialog.show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    Toast.makeText(ItemDetails.this, "Error parsing response", Toast.LENGTH_SHORT).show();
+                                    // Display an AlertDialog indicating an error parsing response
+                                    AlertDialog.Builder errorDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
+                                    errorDialogBuilder.setTitle("Error");
+                                    errorDialogBuilder.setMessage("Error parsing response");
+                                    errorDialogBuilder.setPositiveButton("OK", null);
+                                    AlertDialog errorDialog = errorDialogBuilder.create();
+                                    errorDialog.show();
                                 }
                             }
                         } else {
-                            Toast.makeText(ItemDetails.this, "Error sending request", Toast.LENGTH_SHORT).show();
+                            // Display an AlertDialog indicating an error sending request
+                            AlertDialog.Builder errorDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
+                            errorDialogBuilder.setTitle("Error");
+                            errorDialogBuilder.setMessage("Error sending request");
+                            errorDialogBuilder.setPositiveButton("OK", null);
+                            AlertDialog errorDialog = errorDialogBuilder.create();
+                            errorDialog.show();
                         }
                     }
                 });
+
             }
         });
 
