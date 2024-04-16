@@ -13,6 +13,9 @@ package com.example.bisu_inventoryqrcode;
         import android.widget.TextView;
         import android.widget.Toast;
 
+        import com.bumptech.glide.Glide;
+        import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+        import com.bumptech.glide.request.RequestOptions;
         import com.example.bisu_inventoryqrcode.ApiService;
         import com.example.bisu_inventoryqrcode.CaptureActivityPortrait;
         import com.example.bisu_inventoryqrcode.IPAddressManager;
@@ -46,7 +49,7 @@ package com.example.bisu_inventoryqrcode;
 public class UserDashboard extends AppCompatActivity {
 
     EditText search;
-    ImageView inventory_view, request_item, borrowed_item, scanner, settings_user, more, returned;
+    ImageView inventory_view, request_item, borrowed_item, scanner, settings_user, more, returned, imageView9;
     TextView userNamePlaceholder;
     String ipAddress = ""; //hjhj
     String userId = "";
@@ -82,6 +85,7 @@ public class UserDashboard extends AppCompatActivity {
         settings_user = findViewById(R.id.settings_user);
         returned = findViewById(R.id.returned);
         more = findViewById(R.id.more);
+        imageView9 = findViewById(R.id.imageView9);
 
         userID = getIntent().getStringExtra("UserID");
         fn = getIntent().getStringExtra("FirstName");
@@ -91,6 +95,41 @@ public class UserDashboard extends AppCompatActivity {
 
         boolean isFundAdministrator = getIntent().getBooleanExtra("IsFundAdministrator", false);
         System.out.println("IsFundAdministrator: " + isFundAdministrator);
+        String url="http://192.168.1.11/LoginRegister/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url) // Replace with your base URL
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Create an instance of the ApiService interface
+        apiset apiService = retrofit.create(apiset.class);
+
+        // Get the UserID from the intent
+        String userID = getIntent().getStringExtra("UserID");
+
+        // Make the API call
+        Call<ImageResponse> call = apiService.getImageUrl(userID);
+        call.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Load and display the image using Glide
+                    String imageUrl = response.body().getImageUrl();
+                    Glide.with(UserDashboard.this)
+                            .load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/"+imageUrl)
+                            .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                            .into(imageView9);
+                } else {
+                    Toast.makeText(UserDashboard.this, "Failed to fetch image URL", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+                Toast.makeText(UserDashboard.this, "Failed to fetch image URL: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         returned.setOnClickListener(new View.OnClickListener() {
             @Override

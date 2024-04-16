@@ -83,7 +83,7 @@ public class AfterScannedActivity extends AppCompatActivity {
                                 stockAvailableTextView.setText(stockAvailable);
                                 // Load and display the image using Glide with the base URL
                                 Glide.with(AfterScannedActivity.this)
-                                        .load("http://192.168.137.141/BISU_SupplyManagementQRCode/uploads/pictures/" + imageURL)
+                                        .load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + imageURL)
                                         .into(itemImageView);
                             } else {
                                 // Display an error message if item name, image URL, or StockAvailable not found
