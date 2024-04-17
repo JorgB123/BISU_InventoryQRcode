@@ -47,8 +47,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         prog = findViewById(R.id.prog);
 
         userID = getIntent().getStringExtra("UserID");
-        boolean isFundAdministrator = getIntent().getBooleanExtra("IsFundAdministrator", false);
-        System.out.println("IsFundAdministratorinInventory: " + isFundAdministrator);
+
 
         processdata();
 
@@ -71,10 +70,10 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         Call<List<responsemodel>> call;
 
         // Check if the user is a fund administrator
-        boolean isFundAdministrator = getIntent().getBooleanExtra("IsFundAdministrator", false);
+        String selectedMode = getIntent().getStringExtra("Mode");
 
         // If the user is a fund administrator, fetch all data
-        if (isFundAdministrator) {
+        if (selectedMode.equals("Admin")) {
             call = apicontroller
                     .getInstance()
                     .getapi()

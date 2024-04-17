@@ -1,8 +1,10 @@
 package com.example.bisu_inventoryqrcode;
 
         import androidx.annotation.Nullable;
+        import androidx.appcompat.app.AlertDialog;
         import androidx.appcompat.app.AppCompatActivity;
 
+        import android.content.DialogInterface;
         import android.content.Intent;
         import android.os.AsyncTask;
         import android.os.Bundle;
@@ -10,6 +12,7 @@ package com.example.bisu_inventoryqrcode;
         import android.view.View;
         import android.widget.EditText;
         import android.widget.ImageView;
+        import android.widget.RadioButton;
         import android.widget.TextView;
         import android.widget.Toast;
 
@@ -55,6 +58,8 @@ public class UserDashboard extends AppCompatActivity {
     String userId = "";
     String id, fn, userID;
 
+    private String selectedMode = "";
+
 
 
 
@@ -93,8 +98,7 @@ public class UserDashboard extends AppCompatActivity {
         String cn = getIntent().getStringExtra("ConfirmStatus");
         System.out.println("ConfirmStatus "+cn);
 
-        boolean isFundAdministrator = getIntent().getBooleanExtra("IsFundAdministrator", false);
-        System.out.println("IsFundAdministrator: " + isFundAdministrator);
+
         String url="http://192.168.1.11/LoginRegister/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url) // Replace with your base URL
@@ -173,10 +177,13 @@ public class UserDashboard extends AppCompatActivity {
         inventory_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDashboard.this, ViewInventoryItem.class);
-                intent.putExtra("UserID", userID);
-                intent.putExtra("IsFundAdministrator", isFundAdministrator);
-                startActivity(intent);
+                if (!selectedMode.isEmpty()) {
+                    // If a mode is already selected, directly start the ViewInventoryItem activity
+                    startViewInventoryActivity(selectedMode);
+                } else {
+                    // If no mode is selected, show the mode selection dialog
+                    showModeSelectionDialog();
+                }
             }
         });
 
@@ -244,6 +251,50 @@ public class UserDashboard extends AppCompatActivity {
         // Perform the necessary validation here, such as checking the scanned result against your database
         // For demonstration purposes, assume that scannedResult is valid if it's not empty
         return scannedResult != null && !scannedResult.isEmpty();
+    }
+
+    private void startViewInventoryActivity(String mode) {
+        Intent intent = new Intent(UserDashboard.this, ViewInventoryItem.class);
+        intent.putExtra("UserID", userID);
+        intent.putExtra("Mode", mode);
+        startActivity(intent);
+    }
+    private void showModeSelectionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserDashboard.this);
+        builder.setTitle("Select Mode");
+
+        // Inflate the custom layout containing RadioButtons
+        View view = getLayoutInflater().inflate(R.layout.dialog_mode_selection, null);
+        builder.setView(view);
+
+        RadioButton facultyModeRadioButton = view.findViewById(R.id.radio_faculty_mode);
+        RadioButton adminModeRadioButton = view.findViewById(R.id.radio_admin_mode);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Determine which RadioButton is checked and store the selected mode
+                if (facultyModeRadioButton.isChecked()) {
+                    selectedMode = "Faculty";
+                } else if (adminModeRadioButton.isChecked()) {
+                    selectedMode = "Admin";
+                }
+
+                // Start ViewInventoryItem activity with the selected mode
+                startViewInventoryActivity(selectedMode);
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 
 
