@@ -120,7 +120,7 @@ public class UserDashboard extends AppCompatActivity {
                     // Load and display the image using Glide
                     String imageUrl = response.body().getImageUrl();
                     Glide.with(UserDashboard.this)
-                            .load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/"+imageUrl)
+                            .load("http://192.168.1.11/LoginRegister/item_images/"+imageUrl)
                             .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                             .into(imageView9);
                 } else {
@@ -135,7 +135,8 @@ public class UserDashboard extends AppCompatActivity {
         });
 
 
-        returned.setOnClickListener(new View.OnClickListener() {
+
+        borrowed_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserDashboard.this, ReturnedItems.class);
@@ -144,20 +145,10 @@ public class UserDashboard extends AppCompatActivity {
             }
         });
 
-
-        borrowed_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserDashboard.this, BorrowedItems.class);
-                intent.putExtra("UserID", userID);
-                startActivity(intent);
-            }
-        });
-
         request_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDashboard.this, MyRequest.class);
+                Intent intent = new Intent(UserDashboard.this, BorrowedItems.class);
                 intent.putExtra("UserID", userID);
                 startActivity(intent);
             }
@@ -236,7 +227,7 @@ public class UserDashboard extends AppCompatActivity {
                     // Display a toast message indicating that the item doesn't exist
                     Toast.makeText(UserDashboard.this, "Item not found", Toast.LENGTH_LONG).show();
                     // Go back to UserDashboard
-                    finish();
+                    Log.d("MainActivity", "Item not found: " + scannedResult);
                 }
 
             }

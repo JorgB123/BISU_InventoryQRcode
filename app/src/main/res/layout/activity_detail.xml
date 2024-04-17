@@ -196,30 +196,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/buttonsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/anymore">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/req_btn"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="@drawable/green_button"
-            android:text="Request"
-            android:textColor="@color/white" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/report_btn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/orange_button"
-            android:text="Report"
-            android:textColor="@color/white" />
-    </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
