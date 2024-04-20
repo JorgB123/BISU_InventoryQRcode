@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -24,11 +25,13 @@ import java.util.Locale;
 public class DetailActivity extends AppCompatActivity {
 
     ImageView imageView;
-    TextView stock, descrip;
+    TextView stock, descrip, specsTextView;
     AppCompatButton report_btn, req_btn;
 
     String propertyNumber, userID, description, stockAvailable, propertyID;
     private String ipAddress = "";
+
+    String fn;
 
     ImageView backToRec;
 
@@ -42,8 +45,13 @@ public class DetailActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image_view);
         stock = findViewById(R.id.stock);
         descrip = findViewById(R.id.descrip);
+        specsTextView = findViewById(R.id.specsTextView);
+
+        fn = getIntent().getStringExtra("FirstName");
+        // After initializing fn
+        Log.d("DetailActivity", "First Name: " + fn);
 //        report_btn = findViewById(R.id.report_btn);
-//        req_btn = findViewById(R.id.req_btn);
+        req_btn = findViewById(R.id.req_btn);
         backToRec = findViewById(R.id.backToRec);
 
         backToRec.setOnClickListener(new View.OnClickListener() {
@@ -55,30 +63,32 @@ public class DetailActivity extends AppCompatActivity {
 
 
         // Set onClickListener for req_btn
-//        req_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Check if stockAvailable is equal to 0
-//                if (stockAvailable.equals("0")) {
-//                    // Display an AlertDialog indicating the item is out of stock
-//                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DetailActivity.this);
-//                    alertDialogBuilder.setTitle("Out of Stock");
-//                    alertDialogBuilder.setMessage("This item is currently out of stock.");
-//                    alertDialogBuilder.setPositiveButton("OK", null);
-//                    AlertDialog alertDialog = alertDialogBuilder.create();
-//                    alertDialog.show();
-//                } else {
-//                    // Proceed to the ItemDetails activity
-//                    Intent intent = new Intent(DetailActivity.this, ItemDetails.class);
-//                    intent.putExtra("UserID", userID);
-//                    intent.putExtra("PropertyNumber", propertyNumber);
-//                    intent.putExtra("PropertyID", propertyID);
-//                    intent.putExtra("Description", description);
-//                    intent.putExtra("StockAvailable", stockAvailable);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        req_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if stockAvailable is equal to 0
+                if (stockAvailable.equals("0")) {
+                    // Display an AlertDialog indicating the item is out of stock
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DetailActivity.this);
+                    alertDialogBuilder.setTitle("Out of Stock");
+                    alertDialogBuilder.setMessage("This item is currently out of stock.");
+                    alertDialogBuilder.setPositiveButton("OK", null);
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                } else {
+                    // Proceed to the ItemDetails activity
+                    Intent intent = new Intent(DetailActivity.this, ItemDetails.class);
+                    intent.putExtra("UserID", userID);
+                    intent.putExtra("PropertyNumber", propertyNumber);
+                    intent.putExtra("PropertyID", propertyID);
+                    intent.putExtra("Description", description);
+                    intent.putExtra("StockAvailable", stockAvailable);
+                    intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
+                    intent.putExtra("FirstName",fn);
+                    startActivity(intent);
+                }
+            }
+        });
 //
 //
 //
@@ -133,10 +143,14 @@ public class DetailActivity extends AppCompatActivity {
             propertyNumber = getIntent().getStringExtra("PropertyNumber");
             userID = getIntent().getStringExtra("UserID");
             propertyID = getIntent().getStringExtra("PropertyID");
+            String specs = getIntent().getStringExtra("Specs");
+            System.out.println("specs"+specs);
 
             // Set data to views
             descrip.setText(description);
             stock.setText(stockAvailable);
+            specsTextView.setText(specs);
+
             // Load image using Glide
             Glide.with(this).load(ipAddress + "/BISU_SupplyManagementQRCode/uploads/pictures/" + image).into(imageView);
         }

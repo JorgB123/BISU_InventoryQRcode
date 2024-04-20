@@ -92,8 +92,7 @@ public class ReturnedItems extends AppCompatActivity {
                                 String propertyId = jsonObject.getString("PropertyID");
                                 String quantity = jsonObject.getString("Quantity");
                                 String dateReturned = jsonObject.getString("DateReturn");
-                                String time = jsonObject.getString("Time");
-                                Returns returns = new Returns(propertyId,dateReturned, time, quantity, propertyName);
+                                Returns returns = new Returns(propertyId,dateReturned, quantity, propertyName);
                                 returnedItemsList.add(returns);
 
                             }

@@ -7,7 +7,7 @@ public class Returns {
     private String quantity;
     private String description;
 
-    public Returns(String propertyID, String dateReturn, String time, String quantity, String description) {
+    public Returns(String propertyID, String dateReturn, String quantity, String description) {
         this.propertyID = propertyID;
         this.dateReturn = dateReturn;
         this.time = time;

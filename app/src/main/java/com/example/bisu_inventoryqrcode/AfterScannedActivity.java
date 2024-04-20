@@ -34,6 +34,9 @@ public class AfterScannedActivity extends AppCompatActivity {
     AppCompatButton report_btn, req_btn;
     private String ipAddress = "";
     String userID, propertyID;
+    ImageView backToRec;
+
+    TextView specsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +53,18 @@ public class AfterScannedActivity extends AppCompatActivity {
         final TextView itemNameTextView = findViewById(R.id.descrip);
         final TextView stockAvailableTextView = findViewById(R.id.stock);
         final ImageView itemImageView = findViewById(R.id.image_view);
+
+        specsTextView = findViewById(R.id.specsTextView);
+        backToRec = findViewById(R.id.backToRec);
 //        req_btn = findViewById(R.id.req_btn);
 //        report_btn = findViewById(R.id.report_btn);
+
+        backToRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
 
@@ -67,11 +80,12 @@ public class AfterScannedActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             // Check if the response contains the item name, image URL, and StockAvailable
-                            if (response.has("itemName") && response.has("imageURL") && response.has("stockAvailable")) {
+                            if (response.has("itemName") && response.has("imageURL") && response.has("stockAvailable") && response.has("specs")) {
                                 // Extract the item name, image URL, and StockAvailable from the response
                                 String itemName = response.getString("itemName");
                                 String imageURL = response.getString("imageURL");
                                 String stockAvailable = response.getString("stockAvailable");
+                                String specs = response.getString("specs");
                                 propertyID= response.getString("propertyID");
 
                                 if (stockAvailable == null || stockAvailable.isEmpty() || stockAvailable.equals("null")) {
@@ -81,6 +95,7 @@ public class AfterScannedActivity extends AppCompatActivity {
                                 // Display the item name, image, and StockAvailable in the respective TextViews
                                 itemNameTextView.setText(itemName);
                                 stockAvailableTextView.setText(stockAvailable);
+                                specsTextView.setText(specs);
                                 // Load and display the image using Glide with the base URL
                                 Glide.with(AfterScannedActivity.this)
                                         .load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + imageURL)

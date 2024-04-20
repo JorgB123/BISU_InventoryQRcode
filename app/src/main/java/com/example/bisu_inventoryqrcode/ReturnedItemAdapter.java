@@ -47,14 +47,13 @@ public class ReturnedItemAdapter extends RecyclerView.Adapter<ReturnedItemAdapte
             propertyIdTextView = itemView.findViewById(R.id.property_id_text_view);
             quantityTextView = itemView.findViewById(R.id.quantity_text_view);
             dateReturned = itemView.findViewById(R.id.dateReturned);
-            timeReturned = itemView.findViewById(R.id.timeReturned);
+            //timeReturned = itemView.findViewById(R.id.timeReturned);
         }
 
         public void bind(Returns returnedItem) {
             propertyIdTextView.setText(returnedItem.getDescription());
             quantityTextView.setText(returnedItem.getQuantity());
             dateReturned.setText(returnedItem.getDateReturn());
-            timeReturned.setText(returnedItem.getTime());
 
 
         }

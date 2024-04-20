@@ -2,6 +2,9 @@ package com.example.bisu_inventoryqrcode;
 
 // Inside MyRequest activity
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +47,8 @@ public class MyRequest extends AppCompatActivity {
     TextView prog;
     ConstraintLayout back;
 
+    private static final int NOTIFICATION_ID = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +58,7 @@ public class MyRequest extends AppCompatActivity {
         ipAddress = ipAddressManager.getIPAddress();
 
         userID = getIntent().getStringExtra("UserID");
-        System.out.println("scatter"+userID);
+        System.out.println("scatter" + userID);
 
         recview = findViewById(R.id.recview);
         requestItemList = new ArrayList<RequestItems>();
@@ -61,7 +69,7 @@ public class MyRequest extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         prog = findViewById(R.id.prog);
 
-        back=findViewById(R.id.back);
+        back = findViewById(R.id.back);
 
         fetchRequestItems(userID);
 
@@ -95,7 +103,7 @@ public class MyRequest extends AppCompatActivity {
                                 String propertyID = jsonObject.getString("PropertyID");
 
                                 // Only add items with request status "1" (Requesting)
-                                if (requestStatus.equals("1")) {
+                                if (requestStatus.equals("1") || requestStatus.equals("3")) {
                                     RequestItems requestItem = new RequestItems(propertyName, requestItemID, quantity, requestStatus, propertyID);
                                     requestItemList.add(requestItem);
                                 }
@@ -122,5 +130,6 @@ public class MyRequest extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
+
 
 }

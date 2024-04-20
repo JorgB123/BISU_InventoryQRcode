@@ -3,12 +3,15 @@ package com.example.bisu_inventoryqrcode;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -200,13 +204,9 @@ public class SignUp extends AppCompatActivity {
                             PutData putData = new PutData(IPAddress + "/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
-                                    loadingAlert.closeAlertDialogWithDelay(500);
                                     String result = putData.getResult();
                                     if (result.equals("Sign Up Success")) {
-                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        showSuccessDialog();
                                     } else {
                                         loadingAlert.closeAlertDialogWithDelay(200);
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
@@ -308,6 +308,36 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
+    private void showSuccessDialog() {
+        // Inflate the success dialog layout
+        View view = LayoutInflater.from(SignUp.this).inflate(R.layout.sucess_dialog, null);
+        Button successDone = view.findViewById(R.id.successDone);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        // Set onClickListener for the "successDone" button
+        successDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                // Navigate to LoginActivity
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish(); // Finish the SignUp activity
+            }
+        });
+
+        // Set transparent background for the dialog
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        // Show the dialog
+        alertDialog.show();
+    }
+
 
 
 }

@@ -3,19 +3,20 @@ package com.example.bisu_inventoryqrcode;
 public class responsemodel
 {
 
-    String PropertyID,Description, StockAvailable, Image, PropertyNumber, UserID;
+    String PropertyID,Description, StockAvailable, Image, PropertyNumber, UserID, Specs;
 
 
     public responsemodel() {
 
     }
 
-    public responsemodel(String propertyID, String description, String stockAvailable, String image, String propertyNumber, String userID) {
+    public responsemodel(String propertyID, String description, String stockAvailable, String image, String propertyNumber, String userID, String specs) {
         PropertyID = propertyID;
         Description = description;
         StockAvailable = stockAvailable;
         Image = image;
         PropertyNumber=propertyNumber;
+        Specs=specs;
     }
 
     public String getUserID() {
@@ -64,5 +65,13 @@ public class responsemodel
 
     public void setImage(String image) {
         Image = image;
+    }
+
+    public String getSpecs() {
+        return Specs;
+    }
+
+    public void setSpecs(String specs) {
+        Specs = specs;
     }
 }

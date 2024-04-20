@@ -65,7 +65,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
             } else {
                 t2.setText("0");
             }
-            Glide.with(itemView.getContext()).load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + item.getImage()).into(img);
+                Glide.with(itemView.getContext()).load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + item.getImage()).into(img);
 
             // Set click listener
             itemView.setOnClickListener(new View.OnClickListener() {

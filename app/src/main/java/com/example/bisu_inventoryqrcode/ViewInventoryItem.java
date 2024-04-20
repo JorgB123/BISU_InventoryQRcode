@@ -32,6 +32,8 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
 
     TextView prog;
 
+    String fn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,10 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         prog = findViewById(R.id.prog);
 
         userID = getIntent().getStringExtra("UserID");
+        fn = getIntent().getStringExtra("FirstName");
+        // After initializing fn
+        Log.d("ViewInventory", "First Name: " + fn);
+
 
 
         processdata();
@@ -56,12 +62,33 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent intent = new Intent(ViewInventoryItem.this, UserDashboard.class);
+//                intent.putExtra("UserID", userID);
+//                intent.putExtra("FirstName",fn);
+//                startActivity(intent);
+//                finish();
                 onBackPressed();
             }
         });
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Call processdata again when the activity resumes to refresh data
+        processdata();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ViewInventoryItem.this, UserDashboard.class);
+        intent.putExtra("UserID", userID);
+        intent.putExtra("FirstName", fn);
+        startActivity(intent);
+        finish();
+    }
+
 
     public void processdata() {
         progressBar.setVisibility(View.VISIBLE);
@@ -73,7 +100,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         String selectedMode = getIntent().getStringExtra("Mode");
 
         // If the user is a fund administrator, fetch all data
-        if (selectedMode.equals("Admin")) {
+        if (selectedMode != null && selectedMode.equals("Admin")) {
             call = apicontroller
                     .getInstance()
                     .getapi()
@@ -135,9 +162,12 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         intent.putExtra("PropertyNumber",item.getPropertyNumber());
         intent.putExtra("UserID", userID);
         intent.putExtra("PropertyID",item.getPropertyID());
+        intent.putExtra("Specs",item.getSpecs());
+
 
         // Add more data if needed
-
+        intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
+        intent.putExtra("FirstName",fn);
         // Start the ItemDetails activity
         startActivity(intent);
     }

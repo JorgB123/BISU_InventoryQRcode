@@ -116,7 +116,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                 });
 
             } else if (requestStatus.equals("3")) {
-                status_text_view.setText("Pending");
+                status_text_view.setText("Ready for Pickup");
                 // Disable click for other statuses
                 itemView.setClickable(false);
                 itemView.setFocusable(false);

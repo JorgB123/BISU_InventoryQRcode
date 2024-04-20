@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("FirstName", firstName);
                                     startActivity(intent);
                                     finish();
-                                    Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
                                 } else {
                                     // Display a toast message indicating the user cannot proceed
                                     Toast.makeText(getApplicationContext(), "Please wait for confirmation from the admin.", Toast.LENGTH_SHORT).show();
@@ -127,5 +127,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
 }
 

@@ -1,6 +1,7 @@
 package com.example.bisu_inventoryqrcode;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -57,6 +58,8 @@ public class ItemDetails extends AppCompatActivity {
     private String ipAddress = "";
 
     ImageView backtoReq;
+    private ProgressDialog progressDialog;
+    String fn;
 
 
 
@@ -75,9 +78,18 @@ public class ItemDetails extends AppCompatActivity {
         date = findViewById(R.id.dateAcquired);
         time = findViewById(R.id.time);
         quantity = findViewById(R.id.quantity);
-        purposeEditText = findViewById(R.id.purpose);
+        //purposeEditText = findViewById(R.id.purpose);
         borrowers_id = findViewById(R.id.borrowers_id);
         request_button=findViewById(R.id.request_button);
+
+        fn = getIntent().getStringExtra("FirstName");
+        // After initializing fn
+        Log.d("ItemDetails", "First Name: " + fn);
+
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(true);
 
         backtoReq=findViewById(R.id.backtoReq);
 
@@ -105,21 +117,37 @@ public class ItemDetails extends AppCompatActivity {
         request_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 String dateAcquired = date.getText().toString();
                 String timeAcquired = time.getText().toString();
                 String itemQuantity = quantity.getText().toString();
                 int status = Integer.parseInt("1"); // Get status data if available
-                String purpose = purposeEditText.getText().toString();
+                //String purpose = purposeEditText.getText().toString();
                 String userID = borrowers_id.getText().toString();
                 String propertyId = propertyID.getText().toString();
 
                 // Check if any of the fields are empty
                 if (TextUtils.isEmpty(dateAcquired) || TextUtils.isEmpty(timeAcquired) || TextUtils.isEmpty(itemQuantity)
-                        || TextUtils.isEmpty(purpose) || TextUtils.isEmpty(userID) || TextUtils.isEmpty(propertyId)) {
+                         || TextUtils.isEmpty(userID) || TextUtils.isEmpty(propertyId)) {
                     // Show a Toast message indicating that some fields are empty
                     Toast.makeText(ItemDetails.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return; // Exit the onClick method if any field is empty
                 }
+
+
+                int quantityValue = Integer.parseInt(itemQuantity);
+                if (quantityValue == 0) {
+                    // Display an AlertDialog indicating that the quantity cannot be 0
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
+                    alertDialogBuilder.setTitle("Error");
+                    alertDialogBuilder.setMessage("Quantity cannot be 0");
+                    alertDialogBuilder.setPositiveButton("OK", null);
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    progressDialog.dismiss();
+                    return; // Exit the onClick method if quantity is 0
+                }
+
 
                 // Inside onClick of request_button
                 if (Integer.parseInt(itemQuantity) > Integer.parseInt(stock.getText().toString())) {
@@ -130,6 +158,7 @@ public class ItemDetails extends AppCompatActivity {
                     alertDialogBuilder.setPositiveButton("OK", null);
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
+                    progressDialog.dismiss();
                     return; // Exit the onClick method if requested quantity exceeds available stock
                 }
 
@@ -137,9 +166,10 @@ public class ItemDetails extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+
                         // Prepare data for POST request
-                        String[] field = {"Date", "Time", "Quantity", "RequestStatus", "Purpose", "UserID", "PropertyID"};
-                        String[] data = {dateAcquired, timeAcquired, itemQuantity, String.valueOf(status), purpose, userID, propertyId};
+                        String[] field = {"Date", "Time", "Quantity", "RequestStatus", "UserID", "PropertyID"};
+                        String[] data = {dateAcquired, timeAcquired, itemQuantity, String.valueOf(status), userID, propertyId};
 
                         // Perform POST request using PutData
                         PutData putData = new PutData(ipAddress + "/LoginRegister/request_item.php", "POST", field, data);
@@ -152,6 +182,7 @@ public class ItemDetails extends AppCompatActivity {
                                     boolean success = jsonObject.getBoolean("success");
                                     String message = jsonObject.getString("message");
                                     if (success) {
+
                                         // Display an AlertDialog indicating that the request was successful
                                         AlertDialog.Builder successDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
                                         successDialogBuilder.setTitle("Success");
@@ -163,10 +194,19 @@ public class ItemDetails extends AppCompatActivity {
                                                 date.getText().clear();
                                                 time.getText().clear();
                                                 quantity.getText().clear();
-                                                purposeEditText.getText().clear();
-
                                                 // Navigate back
-                                                onBackPressed();
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Intent intent = new Intent(ItemDetails.this, ViewInventoryItem.class);
+                                                        intent.putExtra("UserID", userID);
+                                                        intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
+                                                        intent.putExtra("FirstName", fn);
+                                                        startActivity(intent);
+                                                        finish();
+                                                        progressDialog.dismiss(); // Dismiss progress dialog after navigation
+                                                    }
+                                                }, 1000); // Delay in milliseconds, adjust as needed
                                             }
                                         });
                                         AlertDialog successDialog = successDialogBuilder.create();

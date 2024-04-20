@@ -232,19 +232,6 @@
                     android:hint="Quantity"
                     android:paddingStart="30dp"/>
 
-                <EditText
-                    android:id="@+id/purpose"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/edittext"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:hint="Purpose"
-                    android:paddingStart="30dp"/>
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/request_button"
                     android:layout_width="match_parent"

@@ -8,6 +8,7 @@ package com.example.bisu_inventoryqrcode;
         import android.content.Intent;
         import android.os.AsyncTask;
         import android.os.Bundle;
+        import android.os.Handler;
         import android.util.Log;
         import android.view.View;
         import android.widget.EditText;
@@ -60,6 +61,8 @@ public class UserDashboard extends AppCompatActivity {
 
     private String selectedMode = "";
 
+    private AlertDialog successDialog;
+
 
 
 
@@ -74,7 +77,7 @@ public class UserDashboard extends AppCompatActivity {
 
 
 
-
+        showSuccessDialog();
 
 
 
@@ -87,16 +90,35 @@ public class UserDashboard extends AppCompatActivity {
         borrowed_item = findViewById(R.id.report_damage);
         request_item = findViewById(R.id.request_item);
         inventory_view = findViewById(R.id.inventory_view);
-        settings_user = findViewById(R.id.settings_user);
+//        settings_user = findViewById(R.id.settings_user);
         returned = findViewById(R.id.returned);
-        more = findViewById(R.id.more);
+//        more = findViewById(R.id.more);
         imageView9 = findViewById(R.id.imageView9);
 
         userID = getIntent().getStringExtra("UserID");
         fn = getIntent().getStringExtra("FirstName");
+        // After initializing fn
+        Log.d("UserDashboard", "First Name: " + fn);
+        Log.d("UserDashboard", "id: " + userID);
+
+
+// Before setting the text of userNamePlaceholder
+        Log.d("UserDashboard", "Before setting text: " + userNamePlaceholder.getText());
+
+// Set the text of the userNamePlaceholder
         userNamePlaceholder.setText(fn);
+
+// After setting the text of userNamePlaceholder
+        Log.d("UserDashboard", "After setting text: " + userNamePlaceholder.getText());
+
         String cn = getIntent().getStringExtra("ConfirmStatus");
         System.out.println("ConfirmStatus "+cn);
+
+        new Handler().postDelayed(() -> {
+            if (successDialog != null && successDialog.isShowing()) {
+                successDialog.dismiss();
+            }
+        }, 2000); // 2000 milliseconds = 2 seconds
 
 
         String url="http://192.168.1.11/LoginRegister/";
@@ -120,7 +142,7 @@ public class UserDashboard extends AppCompatActivity {
                     // Load and display the image using Glide
                     String imageUrl = response.body().getImageUrl();
                     Glide.with(UserDashboard.this)
-                            .load("http://192.168.1.11/LoginRegister/item_images/"+imageUrl)
+                            .load("http://192.168.1.11/LoginRegister/"+imageUrl)
                             .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                             .into(imageView9);
                 } else {
@@ -179,19 +201,28 @@ public class UserDashboard extends AppCompatActivity {
         });
 
         // Set onClickListener for settings_user
-        settings_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserDashboard.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        settings_user.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         // Set onClickListener for scanner
         scanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scanQRCode();
+            }
+        });
+
+        returned.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDashboard.this, MyRequest.class);
+                intent.putExtra("UserID", userID);
+                startActivity(intent);
+
             }
         });
     }
@@ -204,6 +235,16 @@ public class UserDashboard extends AppCompatActivity {
         integrator.setBeepEnabled(true);
         integrator.setCaptureActivity(CaptureActivityPortrait.class);
         integrator.initiateScan();
+    }
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserDashboard.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.login_dialog, null);
+        builder.setView(dialogView);
+
+        successDialog = builder.create();
+        successDialog.setCancelable(false); // Prevent dismissing dialog by tapping outside
+
+        successDialog.show();
     }
 
     @Override
@@ -248,6 +289,7 @@ public class UserDashboard extends AppCompatActivity {
         Intent intent = new Intent(UserDashboard.this, ViewInventoryItem.class);
         intent.putExtra("UserID", userID);
         intent.putExtra("Mode", mode);
+        intent.putExtra("FirstName", fn);
         startActivity(intent);
     }
     private void showModeSelectionDialog() {
