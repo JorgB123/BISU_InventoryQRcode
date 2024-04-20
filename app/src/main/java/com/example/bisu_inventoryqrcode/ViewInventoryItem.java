@@ -2,6 +2,7 @@ package com.example.bisu_inventoryqrcode;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import retrofit2.Response;
 
 public class ViewInventoryItem extends AppCompatActivity implements myadapter.OnItemClickListener {
     RecyclerView recview;
+    RecyclerView.LayoutManager layoutManager;
     String userID;
 
     ConstraintLayout back;
@@ -40,7 +42,11 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         setContentView(R.layout.activity_view_inventory_item);
 
         recview = findViewById(R.id.recview);
-        recview.setLayoutManager(new LinearLayoutManager(this));
+        //recview.setHasFixedSize(true);
+        //recview.setLayoutManager(new LinearLayoutManager(this));
+
+        layoutManager=new GridLayoutManager(this,2);
+        recview.setLayoutManager(layoutManager);
 
         back = findViewById(R.id.back);
         backArrow = findViewById(R.id.backArrow);

@@ -32,7 +32,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
     @NonNull
     @Override
     public myviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item, parent, false);
         return new myviewholder(view);
     }
 
