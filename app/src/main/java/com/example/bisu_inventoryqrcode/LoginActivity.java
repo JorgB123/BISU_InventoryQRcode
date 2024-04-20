@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String userID = userData[0]; // UserID
                                 String firstName = userData[1]; // FirstName
                                 String confirmStatus = userData[2]; // ConfirmStatus
+                                String role = userData[3]; // Role
 
                                 // Check the confirmStatus value
                                 if (confirmStatus.equals("1")) {
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), UserDashboard.class);
                                     intent.putExtra("UserID", userID);
                                     intent.putExtra("FirstName", firstName);
+                                    intent.putExtra("Role", role);
                                     startActivity(intent);
                                     finish();
                                    // Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();

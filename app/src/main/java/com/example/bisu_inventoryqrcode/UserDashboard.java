@@ -62,6 +62,7 @@ public class UserDashboard extends AppCompatActivity {
     private String selectedMode = "";
 
     private AlertDialog successDialog;
+    String role;
 
 
 
@@ -97,9 +98,11 @@ public class UserDashboard extends AppCompatActivity {
 
         userID = getIntent().getStringExtra("UserID");
         fn = getIntent().getStringExtra("FirstName");
+        role = getIntent().getStringExtra("Role");
         // After initializing fn
         Log.d("UserDashboard", "First Name: " + fn);
         Log.d("UserDashboard", "id: " + userID);
+        Log.d("UserDashboard", "Role: " + role);
 
 
 // Before setting the text of userNamePlaceholder
@@ -290,6 +293,7 @@ public class UserDashboard extends AppCompatActivity {
         intent.putExtra("UserID", userID);
         intent.putExtra("Mode", mode);
         intent.putExtra("FirstName", fn);
+        intent.putExtra("Role", role);
         startActivity(intent);
     }
     private void showModeSelectionDialog() {

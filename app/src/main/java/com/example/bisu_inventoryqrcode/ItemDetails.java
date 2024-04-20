@@ -59,7 +59,7 @@ public class ItemDetails extends AppCompatActivity {
 
     ImageView backtoReq;
     private ProgressDialog progressDialog;
-    String fn;
+    String fn, role;
 
 
 
@@ -83,8 +83,10 @@ public class ItemDetails extends AppCompatActivity {
         request_button=findViewById(R.id.request_button);
 
         fn = getIntent().getStringExtra("FirstName");
+        role = getIntent().getStringExtra("Role");
         // After initializing fn
         Log.d("ItemDetails", "First Name: " + fn);
+        Log.d("ItemDetails", "Role: " + role);
 
 
         progressDialog = new ProgressDialog(this);
@@ -202,6 +204,7 @@ public class ItemDetails extends AppCompatActivity {
                                                         intent.putExtra("UserID", userID);
                                                         intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
                                                         intent.putExtra("FirstName", fn);
+                                                        intent.putExtra("Role",role);
                                                         startActivity(intent);
                                                         finish();
                                                         progressDialog.dismiss(); // Dismiss progress dialog after navigation

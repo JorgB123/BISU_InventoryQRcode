@@ -31,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
     String propertyNumber, userID, description, stockAvailable, propertyID;
     private String ipAddress = "";
 
-    String fn;
+    String fn, role, mode;
 
     ImageView backToRec;
 
@@ -48,8 +48,12 @@ public class DetailActivity extends AppCompatActivity {
         specsTextView = findViewById(R.id.specsTextView);
 
         fn = getIntent().getStringExtra("FirstName");
+        role = getIntent().getStringExtra("Role");
+        mode = getIntent().getStringExtra("Mode");
         // After initializing fn
         Log.d("DetailActivity", "First Name: " + fn);
+        Log.d("DetailActivity", "Role: " + role);
+        Log.d("DetailActivity", "Mode: " + mode);
 //        report_btn = findViewById(R.id.report_btn);
         req_btn = findViewById(R.id.req_btn);
         backToRec = findViewById(R.id.backToRec);
@@ -63,9 +67,17 @@ public class DetailActivity extends AppCompatActivity {
 
 
         // Set onClickListener for req_btn
+        // Set onClickListener for req_btn
         req_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check if the user is a Faculty and in Fund Administrator Mode
+                if (role.equals("Faculty") && getIntent().getStringExtra("Mode").equals("Admin")) {
+                    // Display a toast indicating that the user cannot proceed
+                    Toast.makeText(DetailActivity.this, "Faculty in Fund Administrator Mode cannot request", Toast.LENGTH_SHORT).show();
+                    return; // Exit onClick method
+                }
+
                 // Check if stockAvailable is equal to 0
                 if (stockAvailable.equals("0")) {
                     // Display an AlertDialog indicating the item is out of stock
@@ -84,11 +96,13 @@ public class DetailActivity extends AppCompatActivity {
                     intent.putExtra("Description", description);
                     intent.putExtra("StockAvailable", stockAvailable);
                     intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
-                    intent.putExtra("FirstName",fn);
+                    intent.putExtra("FirstName", fn);
+                    intent.putExtra("Role", role);
                     startActivity(intent);
                 }
             }
         });
+
 //
 //
 //

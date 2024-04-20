@@ -32,7 +32,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
 
     TextView prog;
 
-    String fn;
+    String fn, role, mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,12 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
 
         userID = getIntent().getStringExtra("UserID");
         fn = getIntent().getStringExtra("FirstName");
+        role = getIntent().getStringExtra("Role");
+        mode = getIntent().getStringExtra("Mode");
         // After initializing fn
         Log.d("ViewInventory", "First Name: " + fn);
+        Log.d("ViewInventory", "Role: " + role);
+        Log.d("ViewInventory", "Mode: " + mode);
 
 
 
@@ -65,6 +69,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
                 Intent intent = new Intent(ViewInventoryItem.this, UserDashboard.class);
                 intent.putExtra("UserID", userID);
                 intent.putExtra("FirstName",fn);
+                intent.putExtra("Role",role);
                 startActivity(intent);
                 finish();
             }
@@ -156,8 +161,9 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
 
 
         // Add more data if needed
-        intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
+        intent.putExtra("Mode",mode);
         intent.putExtra("FirstName",fn);
+        intent.putExtra("Role",role);
         // Start the ItemDetails activity
         startActivity(intent);
     }
