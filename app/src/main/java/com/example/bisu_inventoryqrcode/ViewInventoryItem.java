@@ -62,12 +62,11 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(ViewInventoryItem.this, UserDashboard.class);
-//                intent.putExtra("UserID", userID);
-//                intent.putExtra("FirstName",fn);
-//                startActivity(intent);
-//                finish();
-                onBackPressed();
+                Intent intent = new Intent(ViewInventoryItem.this, UserDashboard.class);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("FirstName",fn);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -80,15 +79,6 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         // Call processdata again when the activity resumes to refresh data
         processdata();
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(ViewInventoryItem.this, UserDashboard.class);
-        intent.putExtra("UserID", userID);
-        intent.putExtra("FirstName", fn);
-        startActivity(intent);
-        finish();
-    }
-
 
     public void processdata() {
         progressBar.setVisibility(View.VISIBLE);
