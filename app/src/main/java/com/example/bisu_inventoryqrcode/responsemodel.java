@@ -3,20 +3,21 @@ package com.example.bisu_inventoryqrcode;
 public class responsemodel
 {
 
-    String PropertyID,Description, StockAvailable, Image, PropertyNumber, UserID, Specs;
+    String PropertyID,Description, StockAvailable, Image, PropertyNumber, UserID, Specs, WhereAbout;
 
 
     public responsemodel() {
 
     }
 
-    public responsemodel(String propertyID, String description, String stockAvailable, String image, String propertyNumber, String userID, String specs) {
+    public responsemodel(String propertyID, String description, String stockAvailable, String image, String propertyNumber, String userID, String specs, String whereAbout) {
         PropertyID = propertyID;
         Description = description;
         StockAvailable = stockAvailable;
         Image = image;
         PropertyNumber=propertyNumber;
         Specs=specs;
+        WhereAbout=whereAbout;
     }
 
     public String getUserID() {
@@ -73,5 +74,13 @@ public class responsemodel
 
     public void setSpecs(String specs) {
         Specs = specs;
+    }
+
+    public String getWhereAbout() {
+        return WhereAbout;
+    }
+
+    public void setWhereAbout(String whereAbout) {
+        WhereAbout = whereAbout;
     }
 }

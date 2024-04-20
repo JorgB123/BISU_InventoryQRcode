@@ -48,13 +48,14 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
 
     class myviewholder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView t1, t2;
+        TextView t1, t2, loc;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
             t1 = itemView.findViewById(R.id.t1);
             t2 = itemView.findViewById(R.id.t2);
+            loc = itemView.findViewById(R.id.loc);
         }
 
         public void bind(final responsemodel item, final OnItemClickListener listener) {
@@ -65,6 +66,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
             } else {
                 t2.setText("0");
             }
+            loc.setText(item.getWhereAbout());
                 Glide.with(itemView.getContext()).load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/" + item.getImage()).into(img);
 
             // Set click listener

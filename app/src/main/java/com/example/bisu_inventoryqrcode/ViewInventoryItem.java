@@ -8,13 +8,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,6 +39,9 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
     TextView prog;
 
     String fn, role, mode;
+    EditText searchEditText;
+
+    List<responsemodel> dataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,7 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
         recview = findViewById(R.id.recview);
         //recview.setHasFixedSize(true);
         //recview.setLayoutManager(new LinearLayoutManager(this));
+        searchEditText = findViewById(R.id.searchEditText);
 
         layoutManager=new GridLayoutManager(this,2);
         recview.setLayoutManager(layoutManager);
@@ -80,15 +88,48 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
                 finish();
             }
         });
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // No implementation needed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Filter the data based on the search query
+                filterData(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // No implementation needed
+            }
+        });
 
 
-    }
+
+
+}
 
     @Override
     protected void onResume() {
         super.onResume();
         // Call processdata again when the activity resumes to refresh data
         processdata();
+    }
+    private void filterData(String query) {
+        List<responsemodel> filteredList = new ArrayList<>();
+
+        for (responsemodel item : dataList) {
+            // Filter the data based on your criteria
+            if (item.getDescription().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        // Update the RecyclerView with the filtered data
+        myadapter adapter = new myadapter(filteredList, ViewInventoryItem.this);
+        recview.setAdapter(adapter);
     }
 
     public void processdata() {
@@ -123,6 +164,9 @@ public class ViewInventoryItem extends AppCompatActivity implements myadapter.On
                     List<responsemodel> data = response.body();
 
                     if (data != null && !data.isEmpty()) {
+
+                        dataList.clear();
+                        dataList.addAll(data);
                         // Initialize adapter here
                         myadapter adapter = new myadapter(data, ViewInventoryItem.this);
                         recview.setAdapter(adapter);

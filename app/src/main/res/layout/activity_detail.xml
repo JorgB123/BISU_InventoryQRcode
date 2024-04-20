@@ -142,12 +142,21 @@
         app:layout_constraintBottom_toBottomOf="@+id/anymore">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fav"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/fav_btn"
+            android:text="Add to Favorites"
+            android:textColor="@color/black_1100" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/req_btn"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:background="@drawable/green_button"
-            android:text="Request"
+            android:text="Item Reservation"
             android:textColor="@color/white" />
 
     </LinearLayout>
