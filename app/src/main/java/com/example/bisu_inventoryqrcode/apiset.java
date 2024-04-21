@@ -17,4 +17,7 @@ public interface apiset
     @GET("getImage.php")
     Call<ImageResponse> getImageUrl(@Query("UserID") String userID);
 
+    @GET("fetchNew.php")
+    Call<List<InventoryItem>> getNewlyAddedItems();
+
 }

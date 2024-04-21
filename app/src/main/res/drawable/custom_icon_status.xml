@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Icon image -->
+    <item
+        android:drawable="@drawable/status"
+        android:width="14dp"
+        android:height="14dp"
+        android:gravity="center"
+        android:tint="@android:color/darker_gray"/>
+</layer-list>

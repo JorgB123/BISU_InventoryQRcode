@@ -79,24 +79,23 @@
                         android:textSize="23dp"
                         android:textStyle="bold" />
 
+
                     <TextView
                         android:id="@+id/qtyLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:text="  Quantity:"
                         android:textColor="@color/black"
                         android:textSize="22dp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toStartOf="@id/stock"
-                        app:layout_constraintTop_toBottomOf="@id/descrip"/>
-
+                        app:layout_constraintTop_toBottomOf="@id/descrip" />
 
                     <TextView
                         android:id="@+id/stock"
-                        android:layout_width="170dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="$12"
                         android:textColor="@color/black"
                         android:textSize="22dp"

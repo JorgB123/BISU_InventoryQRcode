@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import org.json.JSONException;
@@ -57,20 +59,24 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
 
     public class RequestItemViewHolder extends RecyclerView.ViewHolder {
         private TextView propertyIDTextView, quantityTextView, status_text_view;
-        private View indicator; // Add an indicator view
+        private View indicator;
+        ImageView img;// Add an indicator view
 
         public RequestItemViewHolder(@NonNull View itemView) {
             super(itemView);
             propertyIDTextView = itemView.findViewById(R.id.property_id_text_view);
             quantityTextView = itemView.findViewById(R.id.quantity_text_view);
             status_text_view = itemView.findViewById(R.id.status_text_view);
-            indicator = itemView.findViewById(R.id.indicator_view); // Initialize the indicator view
+//            indicator = itemView.findViewById(R.id.indicator_view);
+            img = itemView.findViewById(R.id.img);// Initialize the indicator view
         }
 
         public void bind(final RequestItems requestItem) {
             propertyIDTextView.setText(requestItem.getPropertyID());
             quantityTextView.setText(requestItem.getQuantity());
-            String id = requestItem.getRequestItemID(); // Assuming getRequestItemID() returns the unique ID for the request item
+            String id = requestItem.getRequestItemID();
+
+            // Assuming getRequestItemID() returns the unique ID for the request item
 
             // Set the status text based on the request status
             final String requestStatus = requestItem.getRequestStatus();
@@ -80,48 +86,49 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                 itemView.setClickable(false);
                 itemView.setFocusable(false);
                 // Hide the indicator
-                indicator.setVisibility(View.GONE);
+               // indicator.setVisibility(View.GONE);
             } else if (requestStatus.equals("2")) {
                 status_text_view.setText("Transferred");
                 // Enable click for transferred status
                 itemView.setClickable(true);
                 itemView.setFocusable(true);
                 // Show the indicator
-                indicator.setVisibility(View.VISIBLE);
+                //indicator.setVisibility(View.VISIBLE);
 
                 // Set click listener
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                        alertDialogBuilder.setTitle("Return Item");
-                        alertDialogBuilder.setMessage("Are you sure you want to return this item?");
-                        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // Pass the data when "Transferred" status is clicked
-                                reportItem(requestItem);
-                            }
-                        });
-                        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // Do nothing or handle the cancellation
-                            }
-                        });
-                        // Create and show the AlertDialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-                    }
-                });
+//                itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+//                        alertDialogBuilder.setTitle("Return Item");
+//                        alertDialogBuilder.setMessage("Are you sure you want to return this item?");
+//                        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                // Pass the data when "Transferred" status is clicked
+//                                reportItem(requestItem);
+//                            }
+//                        });
+//                        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                // Do nothing or handle the cancellation
+//                            }
+//                        });
+//                        // Create and show the AlertDialog
+//                        AlertDialog alertDialog = alertDialogBuilder.create();
+//                        alertDialog.show();
+//                    }
+//                });
 
             } else if (requestStatus.equals("3")) {
                 status_text_view.setText("Ready for Pickup");
                 // Disable click for other statuses
                 itemView.setClickable(false);
                 itemView.setFocusable(false);
+                status_text_view.setBackgroundResource(R.drawable.bg_green);
                 // Hide the indicator
-                indicator.setVisibility(View.GONE);
+               // indicator.setVisibility(View.GONE);
             } else if (requestStatus.equals("4")) {
                 status_text_view.setText("Rejected");
                 // Disable click for other statuses
@@ -136,8 +143,13 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                 itemView.setClickable(false);
                 itemView.setFocusable(false);
                 // Hide the indicator
-                indicator.setVisibility(View.GONE);
+               // indicator.setVisibility(View.GONE);
             }
+            Glide.with(context)
+                    .load("http://192.168.1.11/BISU_SupplyManagementQRCode/uploads/pictures/"+requestItem.getImage()) // Assuming getImageURL() returns the image URL
+                    .placeholder(R.drawable.placeholder) // Placeholder image while loading
+                    .error(R.drawable.errorimage) // Image to show in case of error
+                    .into(img);
         }
 
         private void reportItem(RequestItems requestItem) {

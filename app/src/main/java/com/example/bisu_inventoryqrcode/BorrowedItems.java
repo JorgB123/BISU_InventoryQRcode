@@ -93,10 +93,12 @@ public class BorrowedItems extends AppCompatActivity {
                                 String quantity = jsonObject.getString("Quantity");
                                 String requestStatus = jsonObject.getString("RequestStatus");
                                 String propertyID = jsonObject.getString("PropertyID");
+                                String image = jsonObject.getString("image_url");
+
 
                                 // Only add items with request status "1" (Requesting)
                                 if (requestStatus.equals("2")) {
-                                    RequestItems requestItem = new RequestItems(propertyName, requestItemID, quantity, requestStatus, propertyID);
+                                    RequestItems requestItem = new RequestItems(propertyName, requestItemID, quantity, requestStatus, propertyID,image);
                                     requestItemList.add(requestItem);
                                 }
                             }

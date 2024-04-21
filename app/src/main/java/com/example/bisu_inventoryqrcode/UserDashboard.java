@@ -3,6 +3,8 @@ package com.example.bisu_inventoryqrcode;
         import androidx.annotation.Nullable;
         import androidx.appcompat.app.AlertDialog;
         import androidx.appcompat.app.AppCompatActivity;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
         import android.content.DialogInterface;
         import android.content.Intent;
@@ -42,6 +44,8 @@ package com.example.bisu_inventoryqrcode;
         import java.io.InputStreamReader;
         import java.net.HttpURLConnection;
         import java.net.URL;
+        import java.util.ArrayList;
+        import java.util.List;
         import java.util.Objects;
 
         import retrofit2.Call;
@@ -63,6 +67,9 @@ public class UserDashboard extends AppCompatActivity {
 
     private AlertDialog successDialog;
     String role;
+    RecyclerView recyclerView;
+    InventoryAdapter adapter;
+    List<InventoryItem> itemList = new ArrayList<>();
 
 
 
@@ -75,6 +82,15 @@ public class UserDashboard extends AppCompatActivity {
 
         IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
         ipAddress = ipAddressManager.getIPAddress();
+
+        recyclerView = findViewById(R.id.rec_new);
+        adapter = new InventoryAdapter(itemList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter);
+
+
+        // Make a network request to fetch inventory items
+        fetchInventoryItems();
 
 
 
@@ -239,6 +255,48 @@ public class UserDashboard extends AppCompatActivity {
         integrator.setCaptureActivity(CaptureActivityPortrait.class);
         integrator.initiateScan();
     }
+
+    private void fetchInventoryItems() {
+        // Retrofit setup
+        String baseUrl = "http://192.168.1.11/LoginRegister/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Create API service
+        apiset apiService = retrofit.create(apiset.class);
+
+        // Make the API call to fetch inventory items
+        Call<List<InventoryItem>> call = apiService.getNewlyAddedItems();
+        call.enqueue(new Callback<List<InventoryItem>>() {
+            @Override
+            public void onResponse(Call<List<InventoryItem>> call, Response<List<InventoryItem>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Data retrieval success
+                    List<InventoryItem> data = response.body();
+                    Log.d("FETCH_INVENTORY_SUCCESS", "Received data: " + data);
+
+                    // Update adapter's dataset and notify changes
+                    itemList.clear();
+                    itemList.addAll(data);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    // Data retrieval failed
+                    Log.e("FETCH_INVENTORY_FAILED", "Failed to fetch inventory items");
+                    Toast.makeText(UserDashboard.this, "Failed to fetch inventory items", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<InventoryItem>> call, Throwable t) {
+                // Network request failed
+                Log.e("FETCH_INVENTORY_FAILED", "Failed to fetch inventory items: " + t.getMessage());
+                Toast.makeText(UserDashboard.this, "Failed to fetch inventory items: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void showSuccessDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(UserDashboard.this);
         View dialogView = getLayoutInflater().inflate(R.layout.login_dialog, null);

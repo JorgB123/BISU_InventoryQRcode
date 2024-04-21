@@ -7,13 +7,15 @@ public class RequestItems {
 
     private String quantity;
     private String requestStatus;
+    String image;
 
-    public RequestItems(String propertyID, String requestItemID, String quantity, String requestStatus, String propertyName) {
+    public RequestItems(String propertyID, String requestItemID, String quantity, String requestStatus, String propertyName, String image) {
         this.propertyID = propertyID;
         this.requestItemID = requestItemID;
         this.quantity = quantity;
         this.requestStatus = requestStatus;
         this.propertyName = propertyName;
+        this.image = image;
 
 
     }
@@ -56,6 +58,14 @@ public class RequestItems {
 
     public void setRequestStatus(String requestStatus) {
         this.requestStatus = requestStatus;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 
