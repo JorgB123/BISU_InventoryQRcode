@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,43 +49,47 @@ public class ItemDetails extends AppCompatActivity {
     private Toolbar mToolbar;
     private ActionBar mActionBar;
     private ImageView imageView;
-    private TextView descrip, stock, propertyID, borrowers_id;
+    private TextView descrip, stock, propertyID, borrowers_id, date, time, sundogers;
     Button request_button, report_button;
-    private EditText  date, time, quantity, purposeEditText;
+    private EditText  quantity, purposeEditText;
 
     String userID;
 
     private Calendar calendar;
+    String  stocks, propertyIDs, borrowers_ids, dates, times;
+
 
     private String ipAddress = "";
 
     ImageView backtoReq;
     private ProgressDialog progressDialog;
-    String fn, role;
+    String fn, role, image;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_details);
+        setContentView(R.layout.order_item);
 
         IPAddressManager ipAddressManager = new IPAddressManager(getApplicationContext());
         ipAddress = ipAddressManager.getIPAddress();
         // Initialize views
-       // imageView = findViewById(R.id.image_view);
-        stock = findViewById(R.id.stock);
+        imageView = findViewById(R.id.imageView4);
+        //stock = findViewById(R.id.stock);
         descrip = findViewById(R.id.descrip);
-        propertyID = findViewById(R.id.propertyNumber);
+        sundogers = findViewById(R.id.sundogers);
+        //propertyID = findViewById(R.id.propertyNumber);
         date = findViewById(R.id.dateAcquired);
         time = findViewById(R.id.time);
         quantity = findViewById(R.id.quantity);
         //purposeEditText = findViewById(R.id.purpose);
-        borrowers_id = findViewById(R.id.borrowers_id);
+        //borrowers_id = findViewById(R.id.borrowers_id);
         request_button=findViewById(R.id.request_button);
 
         fn = getIntent().getStringExtra("FirstName");
         role = getIntent().getStringExtra("Role");
+        image = getIntent().getStringExtra("Image");
         // After initializing fn
         Log.d("ItemDetails", "First Name: " + fn);
         Log.d("ItemDetails", "Role: " + role);
@@ -94,6 +100,27 @@ public class ItemDetails extends AppCompatActivity {
         progressDialog.setCancelable(true);
 
         backtoReq=findViewById(R.id.backtoReq);
+
+        // Inside onCreate method
+        quantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Update the value of sundogers TextView with the quantity entered
+                String quantityEntered = s.toString();
+                sundogers.setText(quantityEntered);
+            }
+        });
+
 
         backtoReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,12 +152,14 @@ public class ItemDetails extends AppCompatActivity {
                 String itemQuantity = quantity.getText().toString();
                 int status = Integer.parseInt("1"); // Get status data if available
                 //String purpose = purposeEditText.getText().toString();
-                String userID = borrowers_id.getText().toString();
-                String propertyId = propertyID.getText().toString();
+                propertyIDs = getIntent().getStringExtra("PropertyID");
+                borrowers_ids= getIntent().getStringExtra("UserID");
+                stocks = getIntent().getStringExtra("StockAvailable");
+
 
                 // Check if any of the fields are empty
                 if (TextUtils.isEmpty(dateAcquired) || TextUtils.isEmpty(timeAcquired) || TextUtils.isEmpty(itemQuantity)
-                         || TextUtils.isEmpty(userID) || TextUtils.isEmpty(propertyId)) {
+                         || TextUtils.isEmpty(borrowers_ids) || TextUtils.isEmpty(propertyIDs)) {
                     // Show a Toast message indicating that some fields are empty
                     Toast.makeText(ItemDetails.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return; // Exit the onClick method if any field is empty
@@ -150,9 +179,11 @@ public class ItemDetails extends AppCompatActivity {
                     return; // Exit the onClick method if quantity is 0
                 }
 
+                Log.d("ItemDetDet", stocks);
+                Log.d("ItemDetDet", borrowers_ids);
 
                 // Inside onClick of request_button
-                if (Integer.parseInt(itemQuantity) > Integer.parseInt(stock.getText().toString())) {
+                if (Integer.parseInt(itemQuantity) > Integer.parseInt(stocks)) {
                     // Display an AlertDialog indicating that the requested quantity exceeds the available stock
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemDetails.this);
                     alertDialogBuilder.setTitle("Error");
@@ -171,7 +202,7 @@ public class ItemDetails extends AppCompatActivity {
 
                         // Prepare data for POST request
                         String[] field = {"Date", "Time", "Quantity", "RequestStatus", "UserID", "PropertyID"};
-                        String[] data = {dateAcquired, timeAcquired, itemQuantity, String.valueOf(status), userID, propertyId};
+                        String[] data = {dateAcquired, timeAcquired, itemQuantity, String.valueOf(status), borrowers_ids, propertyIDs};
 
                         // Perform POST request using PutData
                         PutData putData = new PutData(ipAddress + "/LoginRegister/request_item.php", "POST", field, data);
@@ -193,15 +224,13 @@ public class ItemDetails extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // Clear input fields
-                                                date.getText().clear();
-                                                time.getText().clear();
                                                 quantity.getText().clear();
                                                 // Navigate back
                                                 new Handler().postDelayed(new Runnable() {
                                                     @Override
                                                     public void run() {
                                                         Intent intent = new Intent(ItemDetails.this, ViewInventoryItem.class);
-                                                        intent.putExtra("UserID", userID);
+                                                        intent.putExtra("UserID", borrowers_ids);
                                                         intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
                                                         intent.putExtra("FirstName", fn);
                                                         intent.putExtra("Role",role);
@@ -276,20 +305,22 @@ public class ItemDetails extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String description = intent.getStringExtra("Description");
-            String stockAvailable = intent.getStringExtra("StockAvailable");
+
             String image = intent.getStringExtra("Image");
 
             // Set data to views
             //mActionBar.setTitle(description); // Set title to description
             descrip.setText(description);
-            stock.setText(String.valueOf(stockAvailable));
+           // stock.setText(String.valueOf(stockAvailable));
 
             // Load image using Glide
-           // Glide.with(this).load("http://192.168.1.16/LoginRegister/item_images/"+image).into(imageView);
+            Glide.with(this).load(ipAddress + "/BISU_SupplyManagementQRCode/uploads/pictures/" + image).into(imageView);
 
             // Set other data if needed
-            propertyID.setText(intent.getStringExtra("PropertyID"));
-            borrowers_id.setText(intent.getStringExtra("UserID"));
+//            propertyID.setText(intent.getStringExtra("PropertyID"));
+//            borrowers_id.setText(intent.getStringExtra("UserID"));
+
+
 
         }
     }

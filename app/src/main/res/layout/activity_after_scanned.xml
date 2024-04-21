@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:text="Quantity:"
+                        android:text="  Quantity:"
                         android:textColor="@color/black"
                         android:textSize="22dp"
                         android:textStyle="bold"
@@ -101,16 +101,13 @@
 
                     <TextView
                         android:id="@+id/stock"
-                        android:layout_width="170dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
                         android:text="$12"
                         android:textColor="@color/black"
                         android:textSize="22dp"
+                        android:layout_marginEnd="8dp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
 
                 <FrameLayout

@@ -23,4 +23,5 @@
     <color name="black_1000">#131313</color>
     <color name="black_1100">#0d0d0d</color>
     <color name="red">#FF0000</color>
+    <color name="line">#B3B3B3</color>
 </resources>

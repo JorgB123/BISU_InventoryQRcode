@@ -309,7 +309,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/dada" />
+                                app:srcCompat="@drawable/ic_5" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -348,7 +348,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_5" />
+                                app:srcCompat="@drawable/dada" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -421,8 +421,8 @@
 
                             <ImageView
                                 android:id="@+id/returned"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginEnd="16dp"
@@ -431,7 +431,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/ic_1" />
+                                app:srcCompat="@drawable/baseline_add_shopping_cart_24" />
 
                             <TextView
                                 android:id="@+id/notificationBadge"
@@ -584,7 +584,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp">
 
@@ -595,7 +595,8 @@
                     android:layout_weight="1"
                     android:text="What's new"
                     android:textSize="28dp"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/black"
+                    android:fontFamily="sans-serif-black" />
 
 
             </LinearLayout>

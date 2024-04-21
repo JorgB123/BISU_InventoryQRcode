@@ -31,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
     String propertyNumber, userID, description, stockAvailable, propertyID;
     private String ipAddress = "";
 
-    String fn, role, mode;
+    String fn, role, mode, image;
 
     ImageView backToRec;
 
@@ -98,6 +98,7 @@ public class DetailActivity extends AppCompatActivity {
                     intent.putExtra("Mode", getIntent().getStringExtra("Mode"));
                     intent.putExtra("FirstName", fn);
                     intent.putExtra("Role", role);
+                    intent.putExtra("Image", image);
                     startActivity(intent);
                 }
             }
@@ -153,7 +154,7 @@ public class DetailActivity extends AppCompatActivity {
         if (intent != null) {
             description = intent.getStringExtra("Description");
             stockAvailable = intent.getStringExtra("StockAvailable");
-            String image = intent.getStringExtra("Image");
+            image = intent.getStringExtra("Image");
             propertyNumber = getIntent().getStringExtra("PropertyNumber");
             userID = getIntent().getStringExtra("UserID");
             propertyID = getIntent().getStringExtra("PropertyID");
